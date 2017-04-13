@@ -1,0 +1,149 @@
+button{
+	padding:5px 10px;
+}
+button.btn-blue{
+	border:none;
+	color:#fff;
+	background-color:#127cb5;
+}
+button.btn-blue:hover{
+	background-color:#016ba4;
+}
+button.btn-blue i{
+	color:#fff;
+}
+
+button.btn-green{
+	border:none;
+	color:#fff;
+	background-color:#66cc33;
+}
+button.btn-green i{
+	color:#fff;
+}
+button.btn-green:hover{
+	background-color:#55bb22;
+}
+
+.wrapper-content{
+}
+
+.separator-top{
+	border-top: solid 1px #ddd;
+	margin-top:10px;
+	padding-top:10px;
+}
+
+.div_logo{
+	width:100%;
+	height:90px;
+	margin:auto;
+	background-color:#fff;
+	background-image:url("images/logo.png");
+	/* Center and scale the image nicely */
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
+.div_title{
+	text-align:left;
+	font-size:12pt;
+	font-weight:600;
+	color:#241673;
+}
+.div_bigtitle{
+	text-align:left;
+	font-size:15pt;
+	font-weight:600;
+	color:#241673;
+}
+.div_smalltext{
+	font-style:italic;
+	font-size:9pt;
+	text-align:left;
+	margin-bottom:10px;
+	*font-weight:600;
+}
+.div_alert{
+	background-color:#eee;
+	padding:5px;
+	width:100%;
+}
+
+.page-wrapper{
+	*background-color:#ddd;
+	width:100%;
+	height:100%;
+	overflow:auto;
+	padding:10px;
+	padding-left:190px;
+}
+.page-container{
+	*border:solid 1px #ddd;
+	box-shadow: 0px 0px 5px #777;
+}
+.page-header{
+	background-color:#eee;
+	margin:0px;
+	padding:10px;
+	padding-top:15px;
+	padding-bottom:10px;
+}
+.page-content{
+	border:none;
+	background-color:#fff;
+	padding:10px 20px;
+}
+.page-content-topBar{
+	margin:10px 0px;
+	margin-bottom:20px;
+}
+.ihl0700_cTable_display select{
+	width:auto;
+}
+.table-standard{
+	border:none;
+	padding:5px;
+}
+.table-standard th {
+    border: none;
+	border-bottom: 1px solid #777;
+    font-size: 10pt;
+	font-weight:600;
+    color: #000;
+    background-color: #fff;
+    text-align: left;
+    padding: 5px;
+}
+.table-standard td{
+	border: none;
+    padding: 5px 5px;
+    font-size: 10pt;
+    vertical-align: top;
+    border-bottom: 1px solid #eee;
+}
+.table-standard td[colname=index]{
+	text-align:center;
+}
+
+
+
+.formContent{
+	margin-top:20px;
+	margin-bottom:10px;
+}
+.formContent .row > div > div{
+	margin-bottom:10px;
+}
+.formContent .row > div > div select, .formContent .row > div > div input{
+	width:100%;
+}
+.formContent .row > div > div > div{
+	font-weight:600;
+}
+.submissionBar{
+	margin-top:10px;
+}
+.submissionResult{
+	margin-bottom:10px;
+}

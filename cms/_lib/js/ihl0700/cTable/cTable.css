@@ -1,0 +1,47 @@
+.ihl0700_cTable_top{
+	margin-bottom:10px;
+}
+.ihl0700_cTable_display{
+	display:inline-block;
+}
+.ihl0700_cTable_search{
+	float:right;
+	vertical-align:top;
+}
+.ihl0700_cTable_paging{
+	border-top:solid 1px #CCC;
+	padding: 10px 0px;
+}
+.paging_text{
+	display:inline-block;
+}
+.paging_list{
+	float:right;
+	vertical-align:top;
+}
+.paging_list ul.list{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.paging_list ul.list li{
+	float:left;
+	min-width:14px;
+	padding:3px;
+	margin:0px 2px;
+	text-align:center;
+}
+
+.paging_list ul.list li.active{
+	font-weight:600;
+	color:#000;
+	background-color:#ccc;
+}
+
+.paging_list ul.list li.selectable:hover{
+	background-color:#eee;
+}
+.paging_list ul.list li.selectable{
+	cursor:pointer;
+}

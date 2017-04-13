@@ -1,0 +1,73 @@
+body{
+	width:100%;
+	background-color:#fff;
+	background-image:url("images/bg.png");
+	/* Center and scale the image nicely */
+    background-position: top;
+    background-repeat: no-repeat;
+    *background-size: cover;
+}
+
+/* LOGIN */
+div.login_container{
+	width:300px;
+	box-shadow: 0px 0px 10px #777;
+	background-color:#fff;
+	margin:auto;
+	margin-top:5%;
+	padding:20px;
+	text-align:center;
+}
+input.login_input{
+	width:100%;
+	padding:10px;
+	padding-left:40px;
+	margin-top:2px;
+}
+button.login_input{
+	width:100%;
+	padding:7px;
+	font-size:9pt;
+	font-weight:600;
+}
+.iconInputOverlay{
+	position:absolute;
+	top:15px;
+	left:0px;
+	width:40px;
+	font-size:12pt;
+	text-align:center;
+}
+i{
+	color:#aaa;
+}
+
+
+
+
+/* REGISTER */
+div.register_container{
+	width:92%;
+	max-width:680px;
+	box-shadow: 0px 0px 10px #777;
+	background-color:#fff;
+	margin:auto;
+	margin-top:2%;
+	padding:20px;
+	text-align:center;
+}
+.div_formregister{
+	text-align:left;
+}
+.div_formregister .row > div > div{
+	margin:7px 0px;
+}
+.div_formregister input, select, textarea{
+	width:100%;
+}
+
+
+
+
+
+

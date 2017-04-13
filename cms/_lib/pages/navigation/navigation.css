@@ -1,0 +1,34 @@
+.navigation-left{
+	position:fixed;
+	top:0;
+	left:0;
+	width:180px;
+	height:100%;
+	padding:10px 20px;
+	background-color:#fff;
+	border-right: solid 1px #ccc;
+}
+.navigation_logo{
+	margin:10px 0px;
+	margin-bottom:20px;
+}
+
+.navigation-left ul{
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+.navigation-left ul li{
+	padding:3px;
+}
+.navigation-left ul li.active a{
+	color:#115095;
+}
+.navigation-left ul li.active{
+	font-weight:600;
+}
+.navigation-left button i{
+	color:#fff;
+}
+
+
