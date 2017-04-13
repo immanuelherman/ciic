@@ -1,12 +1,4 @@
-body{
-	width:100%;
-	background-color:#fff;
-	background-image:url("images/bg.png");
-	/* Center and scale the image nicely */
-    background-position: top;
-    background-repeat: no-repeat;
-    *background-size: cover;
-}
+
 
 /* LOGIN */
 div.login_container{

@@ -1,0 +1,55 @@
+.page-filter{
+	border-top: solid 1px #ddd;
+	background-color:#eee;
+	padding:10px;
+}
+.page-filter select{
+	width:100%;
+}
+.asset-title{
+	text-align: left;
+    font-size: 12pt;
+    font-weight: 600;
+    color: #241673;
+	margin:5px -10px;
+}
+.assetCategory-content{
+	border:solid 1px #ccc;
+	padding:10px;
+	margin:0px;
+}
+.assetCategory .asset-thumbnail{
+	text-align:center;
+}
+.assetCategory .asset-thumbnail img{
+	width:100%;
+	max-width:200px;
+}
+.assetCategory .asset-param{
+}
+
+.assetCategory .asset-value{
+	font-weight: 600;
+}
+.assetCategory  tr:nth-child(even) {
+    background-color: transparent;
+}
+.assetCategory  .assetCategory-content td{
+	width:100px;
+}
+.assetCategory  .assetCategory-content td:first-child{
+
+}
+.assetCategory button{
+	width:100%;
+	max-width:100px;
+	margin:3px;
+}
+
+.assetCategory .col-tight{
+	padding:0px 5px;
+}
+
+tr#template-mainList-row > td{
+	border:none;
+}

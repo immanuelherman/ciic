@@ -1,3 +1,12 @@
+body{
+	width:100%;
+	background-color:#fff;
+	background-image:url("images/bg.png");
+	/* Center and scale the image nicely */
+    background-position: top;
+    background-repeat: no-repeat;
+    *background-size: cover;
+}
 button{
 	padding:5px 10px;
 }
@@ -83,6 +92,7 @@ button.btn-green:hover{
 	box-shadow: 0px 0px 5px #777;
 }
 .page-header{
+	border:none;
 	background-color:#eee;
 	margin:0px;
 	padding:10px;

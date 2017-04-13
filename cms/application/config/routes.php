@@ -65,10 +65,18 @@ $route['user/get'] = "user/get";
 $route['user/(:num)/get'] = "user/detail/$1";
 
 // Management Asset
+$route['asset/get'] = "asset/get";
+$route['asset/(:num)/get'] = "asset/detail/$1";
+
+// Asset Category
 $route['posm/get'] = "asset/posm";
 $route['product/get'] = "asset/product";
 $route['store/get'] = "asset/store";
 $route['executable/get'] = "asset/executable";
-$route['asset/get'] = "asset/get";
-$route['asset/(:num)/get'] = "asset/detail/$1";
+
+
+
+
+
+
 

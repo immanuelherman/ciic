@@ -7,11 +7,11 @@ class Asset extends CI_Controller {
 	}
 	
 	public function posm(){
-		$data = array("title" => "POSM | Unilever CiiC", "navigation" => "posm", "page_title"=>"POSM", "config" => $this->config);
+		$data = array("title" => "POSM | Unilever CiiC", "navigation" => "posm", "page_title"=>"Point of Sales Material", "config" => $this->config);
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/wrapperTop', $data);
 		$this->load->view('templates/navigation', $data);
-		$this->load->view('pages/asset/asset_get', $data);
+		$this->load->view('pages/asset/assetCategory_get', $data);
 		$this->load->view('templates/wrapperBottom', $data);
 	}
 	public function product(){
@@ -19,7 +19,7 @@ class Asset extends CI_Controller {
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/wrapperTop', $data);
 		$this->load->view('templates/navigation', $data);
-		$this->load->view('pages/asset/asset_get', $data);
+		$this->load->view('pages/asset/assetCategory_get', $data);
 		$this->load->view('templates/wrapperBottom', $data);
 	}
 	public function store(){
@@ -27,7 +27,7 @@ class Asset extends CI_Controller {
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/wrapperTop', $data);
 		$this->load->view('templates/navigation', $data);
-		$this->load->view('pages/asset/asset_get', $data);
+		$this->load->view('pages/asset/assetCategory_get', $data);
 		$this->load->view('templates/wrapperBottom', $data);
 	}
 	public function executable(){
@@ -35,7 +35,7 @@ class Asset extends CI_Controller {
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/wrapperTop', $data);
 		$this->load->view('templates/navigation', $data);
-		$this->load->view('pages/asset/asset_get', $data);
+		$this->load->view('pages/asset/assetCategory_get', $data);
 		$this->load->view('templates/wrapperBottom', $data);
 	}
 	
@@ -47,7 +47,6 @@ class Asset extends CI_Controller {
 		$this->load->view('pages/asset/asset_get', $data);
 		$this->load->view('templates/wrapperBottom', $data);
 	}
-	
 	
 	public function detail($id = 0){
 		$at = ($id==0) ? "Create" : "Edit";
