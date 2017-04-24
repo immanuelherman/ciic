@@ -14,14 +14,13 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Full Name</th>
-							<th class="hidden-xs">Email</th>
-							<th class="hidden-xs hidden-sm">Phone</th>
-							<th class="hidden-xs hidden-sm">Department</th>
-							<th class="hidden-xs hidden-sm hidden-md">Job Title</th>
-							<th class="hidden-xs hidden-sm hidden-md">Last Login</th>
-							<th class="hidden-xs">Role</th>
-							<th>Status</th>
+							<th>Title</th>
+							<th class="hidden-xs">Asset Type</th>
+							<th class="hidden-xs hidden-sm">Brand</th>
+							<th class="hidden-xs hidden-sm">Category</th>
+							<th class="hidden-xs hidden-sm hidden-md">Unilever Contact</th>
+							<th class="hidden-xs hidden-sm hidden-md">Status</th>
+							<th class="hidden-xs">Owner</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -44,8 +43,7 @@
 			<td colName="4" class="hidden-xs hidden-sm"></td>
 			<td colName="5" class="hidden-xs hidden-sm hidden-md"></td>
 			<td colName="6" class="hidden-xs hidden-sm hidden-md"></td>
-			<td colName="7" class="hidden-xs"></td>
-			<td colName="8"></td>
+			<td colName="7" class="hidden-xs hidden-sm hidden-md"></td>
 			<td class="td-center">
 				<button name="btn-edit">Edit</button> 
 				<button name="btn-delete">Delete</button>
@@ -55,7 +53,7 @@
 </section>
 
 <!-- JS -->
-<script type="text/javascript" src="_lib/pages/user/user_get.js"></script>
+<script type="text/javascript" src="_lib/pages/asset/asset_get.js"></script>
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="_lib/pages/login/login.css">
 

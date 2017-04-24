@@ -7,7 +7,7 @@ if(!helper_API){
 		return compatible;
 	}
 	
-	helper_API.configXHR = function(o){
+	helper_API.configXHR = function(o, ignoreData){
 		if(o){
 			o.url = api_url+o.path;
 			switch(String(o.method).toUpperCase()){
@@ -20,7 +20,7 @@ if(!helper_API){
 			//
 			if(o.method=="GET"){
 				var x=0;
-				if(o.data){
+				if(o.data && !ignoreData){
 					for(n in o.data){
 						(x==0) ? o.url+="?" : o.url+="&";
 						o.url+=n+"="+o.data[n];
@@ -28,7 +28,7 @@ if(!helper_API){
 					}
 				}
 			}else{
-				if(o.data) o.data = JSON.stringify(o.data);
+				if(o.data && !ignoreData) o.data = JSON.stringify(o.data);
 			}
 			o.headers = this.prepareHeaders({url:o.path, method:o.method});
 		}
@@ -103,7 +103,40 @@ if(!helper_API){
 		}else{
 			if(o.error_handler) o.error_handler(null);
 		}
-		
+	}
+	
+	helper_API.uploadFile = function(o){
+		var conf = this.configXHR(o, true);
+		if(conf){
+			conf.type = o.type;
+			conf.url = o.url;
+			conf.method = o.method;
+			//
+			$.ajaxSetup(conf);
+			//
+			var ajaxData = new Object();
+			if(o.data) ajaxData.data = o.data;
+			if(o.contentType!=null) ajaxData.contentType = Boolean(o.contentType);
+			if(o.processData!=null) ajaxData.processData = Boolean(o.processData);
+			//
+			var request = $.ajax(ajaxData)
+			request.done(function(response){
+				if(o.success_handler) o.success_handler(JSON.stringify(response));
+			});
+			request.fail(function(response){
+				switch(JSON.stringify(response.status)){
+					case "401": 
+						location.replace("login");
+						if(o.error_handler) o.error_handler(response);
+						break;
+					default:
+						if(o.error_handler) o.error_handler(response);
+						break;
+				}
+			});
+		}else{
+			if(o.error_handler) o.error_handler(null);
+		}
 	}
 		
 	

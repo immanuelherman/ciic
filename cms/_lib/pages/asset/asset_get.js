@@ -43,7 +43,7 @@ this.main.requestMainList = function(data){
 	}
 	helper_API.sendXHR({
 		action:"login",
-		path:"/users",
+		path:"/collections",
 		method:"GET",
 		data:data,
 		success_handler:this.getList_handler.bind(this),
@@ -53,6 +53,7 @@ this.main.requestMainList = function(data){
 this.main.getList_handler = function(result){
 	try{
 		result = JSON.parse(result);
+		console.log(result);
 		if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
 			$("div.div_alert").addClass("hidden");
 			this.parseList(result);
@@ -74,16 +75,15 @@ this.main.parseList = function(data){
 	for(var idx=0; idx<list.length; idx++){
 		var $item = $("tr#template-mainList-row").clone();
 		$item.attr("index", this.listName+"-"+idx);
-		$item.attr("id", list[idx].user_id);
+		$item.attr("id", list[idx].collection_id);
 		$item.find("[colName=index]").html(offset+(idx+1));
-		$item.find("[colName=1]").html(list[idx].first_name+" "+list[idx].last_name);
+		$item.find("[colName=1]").html(list[idx].collection_name);
 		$item.find("[colName=2]").html(list[idx].email);
 		$item.find("[colName=3]").html(list[idx].contact);
 		$item.find("[colName=4]").html(list[idx].department);
 		$item.find("[colName=5]").html(list[idx].job_title);
 		$item.find("[colName=6]").html(list[idx].last_login);
 		$item.find("[colName=7]").html(list[idx].role_name);
-		$item.find("[colName=8]").html(list[idx].active_status);
 		//
 		$item.find("[name=btn-edit]").click(this.edit_click_handler.bind(this));
 		$item.find("[name=btn-delete]").click(this.delete_click_handler.bind(this));
@@ -93,18 +93,18 @@ this.main.parseList = function(data){
 	this.list_table.update(data);
 }
 this.main.add_click_handler = function(ev){
-	window.location = "user/0/get";
+	window.location = base_path+"asset/0/get";
 }
 this.main.edit_click_handler = function(ev){
 	var $item = $(ev.target).closest("tr[id]");
 	var id = $item.attr("id");
-	window.location = "user/"+id+"/get";
+	window.location = base_path+"asset/"+id+"/get";
 }
 this.main.delete_click_handler = function(ev){
 	var $item = $(ev.target).closest("tr[id]");
 	var id = $item.attr("id");
 	var name = $item.find("[colName=1]").text();
-	if(confirm("Permanently Delete User '"+name+"'?")){
+	if(confirm("Permanently Delete Collection '"+name+"'?")){
 		this.form_delete(id);
 	}
 }
@@ -114,7 +114,7 @@ this.main.delete_click_handler = function(ev){
 this.main.form_delete = function(id){
 	helper_API.sendXHR({
 		action:"user delete",
-		path:"/users/"+id,
+		path:"/collections/"+id,
 		method:"DELETE",
 		data:null,
 		success_handler:this.delete_handler.bind(this),

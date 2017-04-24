@@ -93,12 +93,12 @@ this.main.parseList = function(data){
 	this.list_table.update(data);
 }
 this.main.add_click_handler = function(ev){
-	window.location = "user/0/get";
+	window.location = base_path+"user/0/get";
 }
 this.main.edit_click_handler = function(ev){
 	var $item = $(ev.target).closest("tr[id]");
 	var id = $item.attr("id");
-	window.location = "user/"+id+"/get";
+	window.location = base_path+"user/"+id+"/get";
 }
 this.main.delete_click_handler = function(ev){
 	var $item = $(ev.target).closest("tr[id]");
