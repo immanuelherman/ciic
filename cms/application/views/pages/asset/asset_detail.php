@@ -1,41 +1,5 @@
 <div class="page-wrapper">
 	
-	<div class="page-container" style="margin:10px 0px;">
-		<div class="page-header">
-			<div class="div_bigtitle">Asset Files</span></div> 
-		</div>
-		<div class="page-content">
-			<div class="row">
-				<div class="col-sm-4 col-md-3">
-					<input type="file" accept=".zip" name="assetFile" id="assetFile"></input>
-					<div style="margin-top:5px;"></div>
-					<div class="uploadResult div_alert hidden"></div>
-					<button name="btn-fileUpload">Upload</button>
-				</div>
-			</div>
-			<div class="assetFilesList hidden">
-				<div style="border-top:solid 1px #ddd; margin-top:10px; padding:10px 0px;"></div>
-				<div class="row">
-					<div class="col-sm-12 col-md-12">
-						<table id="mainList" class="table-standard">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Filename</th>
-									<th class="hidden-md">Location</th>
-									<th class="hidden-xs">Size (KB)</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
 	<div class="page-container">
 		<div class="page-header">
 			<div class="div_bigtitle">Asset <span name="action"><?php echo($actionType);?></span></div> 
@@ -194,6 +158,42 @@
 	</div>
 	
 	
+	
+	<div class="page-container" style="margin:10px 0px;">
+		<div class="page-header">
+			<div class="div_bigtitle">Asset Files</span></div> 
+		</div>
+		<div class="page-content">
+			<div class="row">
+				<div class="col-sm-4 col-md-3">
+					<input type="file" accept=".zip" name="assetFile" id="assetFile"></input>
+					<div style="margin-top:5px;"></div>
+					<div class="uploadResult div_alert hidden"></div>
+					<button name="btn-fileUpload">Upload</button>
+				</div>
+			</div>
+			<div class="assetFilesList hidden">
+				<div style="border-top:solid 1px #ddd; margin-top:10px; padding:10px 0px;"></div>
+				<div class="row">
+					<div class="col-sm-12 col-md-12">
+						<table id="mainList" class="table-standard">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Filename</th>
+									<th class="hidden-md">Location</th>
+									<th class="hidden-xs">Size (KB)</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	
 	

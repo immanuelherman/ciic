@@ -13,7 +13,7 @@
 				<input class="login_input" type="password" name="ciic_password" id="password" placeholder="password"></input>
 				<div class="iconInputOverlay"><i class="fa fa-unlock-alt"></i></div>
 			</div>
-			<div class="div_smalltext" style="margin-top:5px;">
+			<div class="div_smalltext hidden" style="margin-top:5px;">
 				<a href="">Forgotten Password?</a>
 			</div>
 			<div class="">
