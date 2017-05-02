@@ -17,7 +17,7 @@
 							<th>#</th>
 							<th>Full Name</th>
 							<th class="hidden-xs">Email</th>
-							<th class="hidden-xs hidden-sm">Phone</th>
+							<th class="hidden-xs hidden-sm hidden">Phone</th>
 							<th class="hidden-xs hidden-sm">Department</th>
 							<th class="hidden-xs hidden-sm hidden-md">Job Title</th>
 							<th class="hidden-xs hidden-sm hidden-md">Last Login</th>
@@ -41,7 +41,7 @@
 			<td colName="index"></td>
 			<td colName="1"></td>
 			<td colName="2" class="hidden-xs"></td>
-			<td colName="3" class="hidden-xs hidden-sm"></td>
+			<td colName="3" class="hidden-xs hidden-sm hidden"></td>
 			<td colName="4" class="hidden-xs hidden-sm"></td>
 			<td colName="5" class="hidden-xs hidden-sm hidden-md"></td>
 			<td colName="6" class="hidden-xs hidden-sm hidden-md"></td>

@@ -3,6 +3,8 @@ delete this.main;
 this.main = new Object();
 //
 this.main.init = function(){
+	$("iframe[name='iframe-assetDownload']").attr("src", "");
+	//
 	this.list_table = new ihl0700_cTable();
 	this.list_table.table_update = function(d){
 		this.requestMainList(d);
@@ -20,7 +22,9 @@ this.main.init = function(){
 	//
 	$("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_search input[name=search]").attr("placeholder", "Name");
 	$("[name=btn-add]").click(this.add_click_handler.bind(this));
-	//this.requestMainList();
+	//
+	console.log(asset_type);
+	this.requestMainList();
 }
 this.main.requestMainList = function(data){
 	var limit = ($("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_display select").val());
@@ -41,7 +45,7 @@ this.main.requestMainList = function(data){
 	}
 	helper_API.sendXHR({
 		action:"login",
-		path:"/users",
+		path:"/assets",
 		method:"GET",
 		data:data,
 		success_handler:this.getList_handler.bind(this),
@@ -71,57 +75,38 @@ this.main.parseList = function(data){
 	var list = data.data;
 	for(var idx=0; idx<list.length; idx++){
 		var $item = $("tr#template-mainList-row").clone();
-		$item.attr("index", this.listName+"-"+idx);
-		$item.attr("id", list[idx].user_id);
+		$item.attr("index", "asset-"+idx);
+		$item.attr("id", list[idx].asset_id);
+		$item.attr("src", list[idx].link_download);
 		$item.find("[colName=index]").html(offset+(idx+1));
-		$item.find("[colName=1]").html(list[idx].first_name+" "+list[idx].last_name);
-		$item.find("[colName=2]").html(list[idx].email);
-		$item.find("[colName=3]").html(list[idx].contact);
-		$item.find("[colName=4]").html(list[idx].department);
-		$item.find("[colName=5]").html(list[idx].job_title);
-		$item.find("[colName=6]").html(list[idx].last_login);
-		$item.find("[colName=7]").html(list[idx].role_name);
-		$item.find("[colName=8]").html(list[idx].active_status);
+		for(n in list[idx]){
+			if(list[idx][n]=="") list[idx][n]="-"
+			$item.find("[colname="+n+"]").html(list[idx][n]);
+		}
+		if(list[idx].collection && list[idx].collection.thumbnail){ 
+			$item.find(".asset-thumbnail img").attr("src", String(api_url+list[idx].collection.thumbnail));
+		}
+		
+		$item.find("[name=btn-detail]").click(this.detail_click_handler.bind(this));
+		$item.find("[name=btn-download]").click(this.download_click_handler.bind(this));
 		//
-		$item.find("[name=btn-edit]").click(this.edit_click_handler.bind(this));
-		$item.find("[name=btn-delete]").click(this.delete_click_handler.bind(this));
-		//
-		$("table#mainList tbody").append($item);
+		$("table#mainList > tbody").append($item);
 	}
 	this.list_table.update(data);
 }
 this.main.add_click_handler = function(ev){
-	window.location = "user/0/get";
+	window.location = "asset/0/get?type="+asset_type;
 }
-this.main.edit_click_handler = function(ev){
+this.main.detail_click_handler = function(ev){
 	var $item = $(ev.target).closest("tr[id]");
 	var id = $item.attr("id");
-	window.location = "user/"+id+"/get";
+	window.location = "asset/"+asset_type+"/"+id+"/get";
 }
-this.main.delete_click_handler = function(ev){
-	var $item = $(ev.target).closest("tr[id]");
-	var id = $item.attr("id");
-	var name = $item.find("[colName=1]").text();
-	if(confirm("Permanently Delete User '"+name+"'?")){
-		this.form_delete(id);
-	}
+this.main.download_click_handler = function(ev){
+	var $tr = $(ev.target).closest("tr");
+	var url = api_url+$tr.attr("src");
+	$("iframe[name='iframe-assetDownload']").attr("src", url);
 }
 
-//--------------------------------------------------------------------------------------------------------------------------------------------
-/* Delete */
-this.main.form_delete = function(id){
-	helper_API.sendXHR({
-		action:"user delete",
-		path:"/users/"+id,
-		method:"DELETE",
-		data:null,
-		success_handler:this.delete_handler.bind(this),
-		error_handler:this.delete_handler.bind(this)
-	});
-}
-this.main.delete_handler = function(result){
-	console.log(result);
-	this.list_table.request_data();
-}
 
 this.main.init();

@@ -15,7 +15,7 @@
 }
 .assetCategory-content{
 	border:solid 1px #ccc;
-	padding:10px;
+	padding:10px 5px;
 	margin:0px;
 }
 .assetCategory .asset-thumbnail{
@@ -23,9 +23,11 @@
 }
 .assetCategory .asset-thumbnail img{
 	width:100%;
-	max-width:200px;
+	max-width:150px;
+	*max-height:100px;
 }
-.assetCategory .asset-param{
+.assetCategory .asset-param td{
+	
 }
 
 .assetCategory .asset-value{
@@ -35,11 +37,13 @@
     background-color: transparent;
 }
 .assetCategory  .assetCategory-content td{
-	width:100px;
+	padding:3px 5px;
+	border:none;
 }
-.assetCategory  .assetCategory-content td:first-child{
+.assetCategory  .assetCategory-content tr:nth-child(odd){
+	
+}
 
-}
 .assetCategory button{
 	width:100%;
 	max-width:100px;
@@ -50,6 +54,24 @@
 	padding:0px 5px;
 }
 
+.assetListContainer{
+	padding-left:20px;
+}
+
+.assetCategory-tr > td{
+	padding:0;
+	padding-bottom:3px;
+	border:none;
+}
+
 tr#template-mainList-row > td{
 	border:none;
+}
+
+.filter-selecttable{
+	width:100%;
+}
+.filter-selecttable td:first-child{
+	width:10%;
+	padding-right:7px;
 }

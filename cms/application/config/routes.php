@@ -69,10 +69,14 @@ $route['asset/get'] = "asset/get";
 $route['asset/(:num)/get'] = "asset/detail/$1";
 
 // Asset Category
-$route['posm/get'] = "asset/posm";
-$route['product/get'] = "asset/product";
-$route['store/get'] = "asset/store";
-$route['executable/get'] = "asset/executable";
+/*
+$route['asset/posm'] = "asset/posm";
+$route['asset/product'] = "asset/product";
+$route['asset/store'] = "asset/store";
+$route['asset/executable'] = "asset/executable";
+*/
+$route['asset/(:any)'] = "asset/get_category/$1";
+$route['asset/(:any)/(:num)/get'] = "asset/detail_category/$1/$2";
 
 
 

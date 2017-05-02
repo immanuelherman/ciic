@@ -1,12 +1,21 @@
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
 		<base href="<?php echo($config->item('html_base'));?>" target="_blank">
+		
 		<title><?php echo($title);?></title>
+		
 		<link rel="stylesheet" type="text/css" href="_lib/fonts/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="_lib/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="_lib/js/ihl0700/cTable/cTable.css">
 		<link rel="stylesheet" type="text/css" href="_lib/css/base.css">
 		<link rel="stylesheet" type="text/css" href="_lib/css/ciic.css">
+		<link rel="stylesheet" type="text/css" href="_lib/css/responsive.css">
+		
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		
 	</head>
 	<body>
 		<!-- jQuery -->

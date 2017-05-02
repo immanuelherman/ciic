@@ -15,12 +15,13 @@
 						<tr>
 							<th>#</th>
 							<th>Title</th>
-							<th class="hidden-xs">Asset Type</th>
+							<th>Asset Type</th>
 							<th class="hidden-xs hidden-sm">Brand</th>
-							<th class="hidden-xs hidden-sm">Category</th>
+							<th class="hidden-xs hidden-sm">Country</th>
 							<th class="hidden-xs hidden-sm hidden-md">Unilever Contact</th>
 							<th class="hidden-xs hidden-sm hidden-md">Status</th>
-							<th class="hidden-xs">Owner</th>
+							<th class="hidden-xs hidden-sm">Owner</th>
+							<th></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -38,13 +39,17 @@
 		<tr id="template-mainList-row">
 			<td colName="index"></td>
 			<td colName="1"></td>
-			<td colName="2" class="hidden-xs"></td>
+			<td colName="2"></td>
 			<td colName="3" class="hidden-xs hidden-sm"></td>
 			<td colName="4" class="hidden-xs hidden-sm"></td>
 			<td colName="5" class="hidden-xs hidden-sm hidden-md"></td>
 			<td colName="6" class="hidden-xs hidden-sm hidden-md"></td>
-			<td colName="7" class="hidden-xs hidden-sm hidden-md"></td>
+			<td colName="7" class="hidden-xs hidden-sm"></td>
 			<td class="td-center">
+				<button class="btn-blue" name="btn-download"><i class="fa fa-download"></i> <span class="hidden-xs">Download</span></button> 
+			</td>
+			<td class="td-center">
+				
 				<button name="btn-edit">Edit</button> 
 				<button name="btn-delete">Delete</button>
 			</td>
