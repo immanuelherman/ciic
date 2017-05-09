@@ -6,6 +6,7 @@ body{
     background-position: top;
     background-repeat: no-repeat;
     *background-size: cover;
+	background-attachment: fixed;
 }
 button{
 	padding:5px 10px;
@@ -77,6 +78,8 @@ button.btn-green:hover{
 	background-color:#eee;
 	padding:5px;
 	width:100%;
+	font-size:10pt;
+	overflow:auto;
 }
 
 .page-container{
@@ -144,7 +147,7 @@ button.btn-green:hover{
 .formContent .row > div > div select, .formContent .row > div > div input{
 	width:100%;
 }
-.formContent .subtitle{
+.subtitle{
 	font-weight:600;
 }
 .submissionBar{
@@ -159,4 +162,10 @@ img.assetThumbnailImg{
 	max-width:150px;
 	max-height:100px;
 	border:solid 1px #ccc;
+}
+
+.container-floatRight{
+	clear:both;
+	float:right;
+	margin-top:-7px;
 }

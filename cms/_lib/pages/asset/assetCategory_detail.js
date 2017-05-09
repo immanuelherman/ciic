@@ -3,6 +3,11 @@ delete this.main;
 this.main = new Object();
 //
 this.main.init = function(){
+	var ref = getUrlParameters("ref");
+	if(ref) $("a[name=link-back]").attr("href", ref);
+	//
+	this.user = helper_API.session_get();
+	//
 	this.list_table = new ihl0700_cTable();
 	this.list_table.table_update = function(d){
 		this.requestMainList(d);
@@ -20,11 +25,10 @@ this.main.init = function(){
 	//
 	$("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_search input[name=search]").attr("placeholder", "Name");
 	//
-	$("[name=btn-add]").click(this.add_click_handler.bind(this));
-	//
 	this.requestMainList();
 }
 this.main.requestMainList = function(data){
+	var id = $("input[name=id]").val();
 	var limit = ($("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_display select").val());
 	if(data){
 		if(data.perPage){
@@ -42,8 +46,8 @@ this.main.requestMainList = function(data){
 		var data = new Object({limit:limit});
 	}
 	helper_API.sendXHR({
-		action:"login",
-		path:"/users",
+		action:"asset get",
+		path:"/assets/"+id,
 		method:"GET",
 		data:data,
 		success_handler:this.getList_handler.bind(this),
@@ -68,46 +72,55 @@ this.main.getList_handler = function(result){
 }
 this.main.parseList = function(data){
 	$("table#mainList tbody").empty();
-	//
+	var data = data.data;
+	
+	// Check uploader
+	if(this.user && this.user.data.user_id==data.created_by){
+		$("div[name='containerEdit']").removeClass("hidden");
+		$("[name=btn-edit]").click(this.edit_click_handler.bind(this));
+	}
+			
+	// Input entry
+	for(n in data){
+		if(data[n]=="") data[n]="-";
+		if(data[n]=="undefined") data[n]="-";
+		$(".asset-value span[name='"+n+"']").html(data[n]);
+	}
+	
+	// Display thumbnails
+	var url_thumbnail = data.collection.thumbnail;
+	$("div.thumbnailContainer").empty();
+	var thumbnail = "<img src='"+api_url+url_thumbnail+"' class='assetThumbnailImg'/>";
+	$("div.thumbnailContainer").append(thumbnail);
+	
+	// Listing files
 	var offset = (Number($("table#mainList").attr("page"))-1) * Number($("table#mainList").attr("display"));
-	var list = data.data;
+	var list = data.files;
 	for(var idx=0; idx<list.length; idx++){
 		var $item = $("tr#template-mainList-row").clone();
-		$item.attr("index", this.listName+"-"+idx);
-		$item.attr("id", list[idx].user_id);
+		$item.attr("index", "file-"+idx);
+		$item.attr("id", list[idx].file_id);
+		$item.attr("src", list[idx].src);
 		$item.find("[colName=index]").html(offset+(idx+1));
-		$item.find("[colName=1]").html(list[idx].first_name+" "+list[idx].last_name);
-		$item.find("[colName=2]").html(list[idx].email);
-		$item.find("[colName=3]").html(list[idx].contact);
-		$item.find("[colName=4]").html(list[idx].department);
-		$item.find("[colName=5]").html(list[idx].job_title);
-		$item.find("[colName=6]").html(list[idx].last_login);
-		$item.find("[colName=7]").html(list[idx].role_name);
-		list[idx].is_active = (list[idx].is_active) ? "active" : "inactive";
-		$item.find("[colName=8]").html(list[idx].is_active);
+		$item.find("[colName=1]").html(list[idx].origin_name);
+		$item.find("[colName=2]").html(list[idx].type);
+		$item.find("[colName=3]").html(list[idx].size_KB);
 		//
-		$item.find("[name=btn-edit]").click(this.edit_click_handler.bind(this));
-		$item.find("[name=btn-delete]").click(this.delete_click_handler.bind(this));
+		$item.find("button[name='btn-assetDownload']").click(this.assetDownload_click_handler.bind(this));
 		//
 		$("table#mainList tbody").append($item);
 	}
 	this.list_table.update(data);
 }
-this.main.add_click_handler = function(ev){
-	window.location = base_path+"user/0/get";
-}
 this.main.edit_click_handler = function(ev){
-	var $item = $(ev.target).closest("tr[id]");
-	var id = $item.attr("id");
-	window.location = base_path+"user/"+id+"/get";
+	var id = $("input[name='id']").val();
+	window.location = "asset/"+id+"/get";
 }
-this.main.delete_click_handler = function(ev){
-	var $item = $(ev.target).closest("tr[id]");
-	var id = $item.attr("id");
-	var name = $item.find("[colName=1]").text();
-	if(confirm("Permanently Delete User '"+name+"'?")){
-		this.form_delete(id);
-	}
+this.main.assetDownload_click_handler = function(ev){
+	var $tr = $(ev.target).closest("tr");
+	var src = "/get_files"+$tr.attr("src");
+	console.log(src);
+	$("iframe[name=assetFilesIframe]").attr("src",api_url+src);
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------

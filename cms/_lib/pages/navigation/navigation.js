@@ -14,7 +14,6 @@ this.navigation.uploadAsset_click_handler = function(ev){
 }
 
 this.navigation.toggleNavigation_click_handler = function(ev){
-	console.log($(".navigation_listContainer"));
 	$(".navigation_listContainer").toggleClass("showNavigation");
 	$("button#navigation-toggle i").toggleClass("fa-reorder");
 	$("button#navigation-toggle i").toggleClass("fa-chevron-left");

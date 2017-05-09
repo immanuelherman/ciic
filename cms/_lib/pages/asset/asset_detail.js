@@ -3,6 +3,9 @@ delete this.main;
 this.main = new Object();
 //
 this.main.init = function(){
+	var ref = getUrlParameters("ref");
+	if(ref) $("a[name=link-back]").attr("href", ref);
+	
 	$("[name=btn-create]").click(this.createAnother_click_handler.bind(this));
 	$("[name=btn-fileUpload]").click(this.uploadFile_click_handler.bind(this));
 	
@@ -47,6 +50,9 @@ this.main.getData = function(){
 			error_handler:this.getList_handler.bind(this)
 		});
 	}else{
+		var asset_type = getUrlParameters("type");
+		$("select[name=assetType]").val(asset_type);
+		//
 		$("select[name=assetType]").prop("disabled", null);
 		$("button[name=btn-save]").text("Create");
 	}
@@ -105,9 +111,8 @@ this.main.parseFileList = function(data){
 }
 this.main.assetDownload_click_handler = function(ev){
 	var $tr = $(ev.target).closest("tr");
-	var src = $tr.attr("src");
+	var src = "/get_files"+$tr.attr("src");
 	$("iframe[name=assetFilesIframe]").attr("src",api_url+src);
-	console.log($("iframe[name=assetFilesIframe]"));
 }
 
 

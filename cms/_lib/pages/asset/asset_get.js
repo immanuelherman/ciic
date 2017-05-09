@@ -104,7 +104,7 @@ this.main.delete_click_handler = function(ev){
 	var $item = $(ev.target).closest("tr[id]");
 	var id = $item.attr("id");
 	var name = $item.find("[colName=1]").text();
-	if(confirm("Permanently Delete Collection '"+name+"'?")){
+	if(confirm("Permanently Delete Asset '"+name+"'?")){
 		this.form_delete(id);
 	}
 }

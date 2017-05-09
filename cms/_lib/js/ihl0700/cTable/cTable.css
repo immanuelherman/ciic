@@ -1,11 +1,13 @@
 .ihl0700_cTable_top{
-	margin-bottom:10px;
+	padding:10px 0px;
+	height:55px;
 }
 .ihl0700_cTable_display{
+	float:right;
 	display:inline-block;
 }
 .ihl0700_cTable_search{
-	float:right;
+	float:left;
 	vertical-align:top;
 }
 .ihl0700_cTable_paging{

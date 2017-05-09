@@ -2,7 +2,7 @@
 <div class="page-wrapper">
 	<div class="page-container">
 		<div class="page-header">
-			<div style="clear:both; float:right;">
+			<div style="clear:both; float:right; margin-top:-7px;">
 				<button name="btn-add" class="btn-green"><i class="fa fa-upload" aria-hidden="true"></i> Upload New</button>
 			</div>
 			<div class="div_bigtitle"><?php echo($page_title);?></div>
@@ -114,7 +114,7 @@
 									<tr><td class="asset-param">Owner</td><td name="val-4" class="asset-value"><span colName="owner">-</span></td></tr>
 								</table>
 							</div>
-							<div class="col-md-2 col-lg-3 col-tight" style="padding-top:10px; text-align:center;">
+							<div class="col-md-2 col-lg-3 col-tight" style="text-align:center;">
 								<button name="btn-download" class="btn-blue"><i class="fa fa-download"></i> Download</button>
 								<button name="btn-detail" class="">Detail</button>
 							</div>
@@ -128,7 +128,7 @@
 
 <!-- JS -->
 <script>
-	var asset_type = "<?php echo($navigation);?>";
+	var asset_type = "<?php echo($asset_type);?>";
 </script>
 <script type="text/javascript" src="_lib/pages/asset/assetCategory_get.js"></script>
 <!-- CSS -->

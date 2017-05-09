@@ -1,0 +1,145 @@
+.page-wrapper{
+	width:100%;
+	max-width:1200px;
+	margin:auto;
+	*overflow:auto;
+	margin-top:50px;
+	margin-bottom:5px;
+	padding:10px;
+}
+.navigation-left{
+	position:fixed;
+	z-index:9999;
+	top:0;
+	left:0;
+	width:100%;
+	height:50px;
+	background-color:#fff;
+	border-bottom: solid 1px #ccc;
+}
+.navigation_logo{
+	margin:10px 0px;
+	margin-bottom:20px;
+	text-align:center;
+}
+.navigation_logo img{
+	height:30px;
+}
+.navigation-left ul{
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+.navigation-left ul li{
+	padding:3px;
+}
+.navigation-left ul li.active a{
+	color:#115095;
+}
+.navigation-left ul li.active{
+	font-weight:600;
+}
+.navigation-left button i{
+	color:#fff;
+}
+.assetCategory .col-tight{
+	text-align:center;
+}
+
+
+
+/**/
+.navigation_responsive_button{
+	float:left;
+}
+.navigation_responsive_button button{
+	width:36px;
+	text-align:center;
+	background-color:transparent;
+	border:none;
+	padding:18px 24px;
+}
+.navigation_responsive_button button i{
+	color:#bbb;
+}
+.navigation_listContainer{
+	display:none;
+	width:50%;
+	max-width:180px;
+	margin-top:-11px;
+	padding:10px;
+	padding-bottom:15px;
+	background-color:#fff;
+	border-right:solid 1px #ccc;
+	border-bottom:solid 1px #ccc;
+}
+.showNavigation{
+	display:block;
+}
+
+
+.assetCategory  .assetCategory-content td:first-child{
+	text-align:right;
+	width:50%;
+}
+
+@media only screen and (min-width: 768px) {
+	.assetCategory  .assetCategory-content td:first-child{
+		width:60px;
+		text-align:left;
+	}
+
+	.navigation_responsive_button{
+		display:none;
+	}
+	.page-wrapper{
+		width:100%;
+		overflow:auto;
+		margin-top: 0px;
+		padding:10px;
+		padding-left:170px;
+	}
+	.navigation-left{
+		position:fixed;
+		top:0;
+		left:0;
+		width:160px;
+		height:100%;
+		padding:10px 10px;
+		background-color:#fff;
+		border-right: solid 1px #ccc;
+	}
+	.navigation_logo{
+		margin:10px 0px;
+		margin-bottom:20px;
+	}
+	.navigation_logo img{
+		width:100%;
+		height:auto;
+	}
+	.navigation_listContainer{
+		display:block;
+		width:100%;
+		max-width:auto;
+		border:none;
+		margin:0;
+		padding:0;
+	}
+	.assetCategory .col-tight{
+		text-align:left;
+	}
+	.assetCategory  .assetCategory-content td:first-child{
+		text-align:left;
+	}
+}
+
+
+@media only screen and (min-width: 1024px) {
+	.page-wrapper{
+		padding-left:190px;
+	}
+	.navigation-left{
+		width:180px;
+		padding:10px 15px;
+	}
+}

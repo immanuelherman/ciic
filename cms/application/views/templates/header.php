@@ -28,6 +28,8 @@
 		<script type="text/javascript" src="_lib/js/momentjs/moment.min.js"></script>
 		<!-- momentjs -->
 		<script type="text/javascript" src="_lib/js/ihl0700/cTable/cTable.js"></script>
+		<!-- helpers -->
+		<script type="text/javascript" src="_lib/js/helpers.js"></script>
 		<!-- Config -->
 		<script type="text/javascript">
 			var base_path = "<?php echo($config->item('html_base'));?>";

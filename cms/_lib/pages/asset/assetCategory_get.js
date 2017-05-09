@@ -20,10 +20,9 @@ this.main.init = function(){
 		callbackFunction	: this.list_table.table_update_handler
 	});
 	//
-	$("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_search input[name=search]").attr("placeholder", "Name");
+	$("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_search input[name=search]").attr("placeholder", "Location, Brand, Contact");
 	$("[name=btn-add]").click(this.add_click_handler.bind(this));
 	//
-	console.log(asset_type);
 	this.requestMainList();
 }
 this.main.requestMainList = function(data){
@@ -43,8 +42,11 @@ this.main.requestMainList = function(data){
 	if(!data){
 		var data = new Object({limit:limit});
 	}
+	if(asset_type){
+		data.asset_type = asset_type;
+	}
 	helper_API.sendXHR({
-		action:"login",
+		action:"get assets",
 		path:"/assets",
 		method:"GET",
 		data:data,
@@ -95,12 +97,12 @@ this.main.parseList = function(data){
 	this.list_table.update(data);
 }
 this.main.add_click_handler = function(ev){
-	window.location = "asset/0/get?type="+asset_type;
+	window.location = base_path+"asset/0/get?type="+asset_type+"&ref=asset/"+asset_type;
 }
 this.main.detail_click_handler = function(ev){
 	var $item = $(ev.target).closest("tr[id]");
 	var id = $item.attr("id");
-	window.location = "asset/"+asset_type+"/"+id+"/get";
+	window.location = base_path+"asset/"+asset_type+"/"+id+"/get";
 }
 this.main.download_click_handler = function(ev){
 	var $tr = $(ev.target).closest("tr");

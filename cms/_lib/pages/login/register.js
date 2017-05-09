@@ -37,7 +37,7 @@ this.register.form_submit = function(){
 	data.role_code = $("select[name=rolecode]").val();
 	data.is_active = $("select[name=activestatus]").val();
 	
-	console.log(data);
+	//console.log(data);
 	
 	// Validation
 	var eM = new Array();
@@ -46,14 +46,18 @@ this.register.form_submit = function(){
 	if(data.password == "" || data.password != data.passconf){eM.push("Password is empty or doesn't match"); eF = false;}
 	if(data.first_name == ""){eM.push("First name is required"); eF = false;}
 	if(data.last_name == ""){eM.push("Last name is required"); eF = false;}
-	if(data.contact == ""){eM.push("Phone is required"); eF = false;}
+	if(data.contact == "" || data.contact.length<6){eM.push("Phone is required and must at least 6 characters length"); eF = false;}
 	if((String(id) == "0" || id == "") && data.password == ""){eM.push("Password is required"); eF = false;}
 	//
 	if(!eF){
 		$("div.submissionResult").html(eM.join("<br/>"));
+		$("button#register_cancel").removeClass("hidden");
+		$("button#register_submit").removeClass("hidden");
 		return null;
 	}else{
 		$("input, select, textarea").prop("disabled",1);
+		$("button#register_cancel").addClass("hidden");
+		$("button#register_submit").addClass("hidden");
 	}
 	//
 	var method = (String(id) != "0" && id != "") ? "PUT" : "POST";
@@ -73,20 +77,22 @@ this.register.form_submit = function(){
 		error_handler:this.save_handler.bind(this)
 	});
 	
-	if(String(id) == "0" || id == ""){
-		$("[name=btn-reset]").addClass("hidden");
-		$("[name=btn-save]").addClass("hidden");
-	}
 }
 
 this.register.save_handler = function(result){
 	$("input, select, textarea").prop("disabled",null);
+	$("button#register_cancel").removeClass("hidden");
+	$("button#register_submit").removeClass("hidden");
+	//
 	try{
 		var json = JSON.parse(result);
-		console.log(json);
-		$("div.submissionResult").html(json.responseText);
+		if(json.responseStatus == "SUCCESS"){
+			$("div.submissionResult").html("Registration success. Site admin will process your request.");
+		}
 	}catch(err){
-		$("div.submissionResult").html("Registration Failed. Please Try Again.");
+		console.log(result);
+		var failMsg = (result.responseJSON.error.message);
+		$("div.submissionResult").html("Registration Failed. "+failMsg);
 	}
 	$("div.submissionResult").removeClass("hidden");
 }

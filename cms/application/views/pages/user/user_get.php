@@ -20,10 +20,10 @@
 							<th class="hidden-xs hidden-sm hidden">Phone</th>
 							<th class="hidden-xs hidden-sm">Department</th>
 							<th class="hidden-xs hidden-sm hidden-md">Job Title</th>
-							<th class="hidden-xs hidden-sm hidden-md">Last Login</th>
+							<th class="hidden-xs hidden-sm hidden-md hidden">Last Login</th>
 							<th class="hidden-xs">Role</th>
 							<th>Status</th>
-							<th></th>
+							<th width="120px;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -44,7 +44,7 @@
 			<td colName="3" class="hidden-xs hidden-sm hidden"></td>
 			<td colName="4" class="hidden-xs hidden-sm"></td>
 			<td colName="5" class="hidden-xs hidden-sm hidden-md"></td>
-			<td colName="6" class="hidden-xs hidden-sm hidden-md"></td>
+			<td colName="6" class="hidden-xs hidden-sm hidden-md hidden"></td>
 			<td colName="7" class="hidden-xs"></td>
 			<td colName="8"></td>
 			<td class="td-center">

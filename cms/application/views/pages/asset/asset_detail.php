@@ -6,7 +6,7 @@
 		</div>
 		
 		<div class="page-content">
-			<a href="asset/get" target="_self"><i class="fa fa-angle-left"></i> Back to List</a>
+			<a name="link-back" href="asset/get" target="_self"><i class="fa fa-angle-left"></i> Back</a>
 			<div class="div_alert hidden" style="margin-bottom:5px;"></div>
 			<div class="formContent">
 				<input type="hidden" name="id" value="<?php echo($id);?>" disabled />

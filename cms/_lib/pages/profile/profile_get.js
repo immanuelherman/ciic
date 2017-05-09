@@ -4,9 +4,55 @@ this.main = new Object();
 //
 this.main.init = function(){
 	$("[name=btn-create]").click(this.createAnother_click_handler.bind(this));
+	//
+	
+	this.list_table = new ihl0700_cTable();
+	this.list_table.table_update = function(d){
+		this.requestMainList(d);
+	}
+	this.list_table.table_update_handler = function(d){
+		console.log("table_update_handler");
+	}
+	// Init table
+	this.list_table.constructor({
+		$table				: $("table#mainList"),
+		url					: this.url,
+		requestFunction		: this.list_table.table_update.bind(this),
+		callbackFunction	: this.list_table.table_update_handler
+	});
+	$("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_search input[name=search]").attr("placeholder", "Title, Brand, Contact");
+	$("[name=btn-add]").click(this.add_click_handler.bind(this));
+	//
 	var user = helper_API.session_get();
 	this.getData(user.data.user_id);
 }
+this.main.requestMainList = function(data){
+	var limit = ($("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_display select").val());
+	if(data){
+		if(data.perPage){
+			data.limit = data.perPage;
+			data.perPage = null;
+			delete data.perPage;
+		}
+		if(data.page){
+			//data.offset = data.page;
+			data.page = null;
+			delete data.page;
+		}
+	}
+	if(!data){
+		var data = new Object({limit:limit});
+	}
+	helper_API.sendXHR({
+		action:"get my assets",
+		path:"/me/assets",
+		method:"GET",
+		data:data,
+		success_handler:this.getUserAsset_handler.bind(this),
+		error_handler:this.getUserAsset_handler.bind(this)
+	});
+}
+
 
 
 /**/
@@ -24,7 +70,7 @@ this.main.getData = function(id){
 	this.id = id;
 	if(this.id != "" && this.id != "0"){
 		$("input[name=email], input[type=password]").prop("disabled",1);
-		$("input[name=email], input[type=password]").attr("editable","0");
+		$("input[name=email]").attr("editable","0");
 		$("button[name=btn-save]").text("Update Profile");
 		helper_API.sendXHR({
 			action:"user get",
@@ -47,13 +93,15 @@ this.main.getList_handler = function(result){
 		result = JSON.parse(result);
 		if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
 			this.parseResult(result);
+			//
+			this.getUserAsset();
 		}else{
-			$("div.div_alert").removeClass("hidden");
-			$("div.div_alert").html(result.responseText);
+			$("div.alertProfile").removeClass("hidden");
+			$("div.alertProfile").html(result.responseText);
 		}
 	}catch(err){
-		$("div.div_alert").removeClass("hidden");
-		$("div.div_alert").html(result.responseText);
+		$("div.alertProfile").removeClass("hidden");
+		$("div.alertProfile").html(result.responseText);
 	}
 }
 this.main.parseResult = function(data){
@@ -61,6 +109,105 @@ this.main.parseResult = function(data){
 	this.initialData = list;
 	this.form_reset();
 }
+
+
+
+/**/
+this.main.getUserAsset = function(){
+	if(this.id != "" && this.id != "0"){
+		helper_API.sendXHR({
+			action:"user get",
+			path:"/me/assets",
+			method:"GET",
+			data:null,
+			success_handler:this.getUserAsset_handler.bind(this),
+			error_handler:this.getUserAsset_handler.bind(this)
+		});
+	}else{
+		$("button[name=btn-save]").text("Create");
+	}
+	//
+	$("[name=btn-save]").click(this.save_click_handler.bind(this));
+	$("[name=btn-reset]").click(this.reset_click_handler.bind(this));
+}
+this.main.getUserAsset_handler = function(result){
+	try{
+		result = JSON.parse(result);
+		if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
+			this.parseAssetResult(result);
+		}else{
+			$("div.alertAsset").removeClass("hidden");
+			$("div.alertAsset").html(result.responseText);
+		}
+	}catch(err){
+		$("div.alertAsset").removeClass("hidden");
+		$("div.alertAsset").html(result.responseText);
+	}
+}
+this.main.parseAssetResult = function(data){
+	$("table#mainList tbody").empty();
+	//
+	var offset = (Number($("table#mainList").attr("page"))-1) * Number($("table#mainList").attr("display"));
+	var list = data.data;
+	for(var idx=0; idx<list.length; idx++){
+		var $item = $("tr#template-mainList-row").clone();
+		$item.attr("index", "asset-"+idx);
+		$item.attr("id", list[idx].asset_id);
+		$item.attr("src", list[idx].link_download);
+		$item.attr("asset_type", list[idx].asset_type);
+		$item.find("[colName=index]").html(offset+(idx+1));
+		for(n in list[idx]){
+			if(list[idx][n]=="") list[idx][n]="-"
+			$item.find("[colname="+n+"]").html(list[idx][n]);
+		}
+		$item.find("[name=btn-detail]").click(this.detail_click_handler.bind(this));
+		$item.find("[name=btn-delete]").click(this.delete_click_handler.bind(this));
+		$item.find("[name=btn-download]").click(this.download_click_handler.bind(this));
+		//
+		$("table#mainList > tbody").append($item);
+	}
+	this.list_table.update(data);
+}
+this.main.add_click_handler = function(ev){
+	window.location = "asset/0/get?ref=profile";
+}
+this.main.detail_click_handler = function(ev){
+	var $item = $(ev.target).closest("tr[id]");
+	var id = $item.attr("id");
+	var asset_type = $item.attr("asset_type");
+	window.location = "asset/"+asset_type+"/"+id+"/get?ref=profile";
+}
+this.main.download_click_handler = function(ev){
+	var $tr = $(ev.target).closest("tr");
+	console.log($tr);
+	var url = api_url+$tr.attr("src");
+	$("iframe[name='iframe-assetDownload']").attr("src", url);
+}
+this.main.delete_click_handler = function(ev){
+	var $item = $(ev.target).closest("tr[id]");
+	var id = $item.attr("id");
+	var name = $item.find("[colName=title]").text();
+	if(confirm("Delete Asset '"+name+"'?")){
+		this.form_delete(id);
+	}
+}
+
+/**/
+this.main.form_delete = function(id){
+	helper_API.sendXHR({
+		action:"Asset delete",
+		path:"/assets/"+id,
+		method:"DELETE",
+		data:null,
+		success_handler:this.delete_handler.bind(this),
+		error_handler:this.delete_handler.bind(this)
+	});
+}
+this.main.delete_handler = function(result){
+	console.log(result);
+	this.list_table.request_data();
+}
+
 
 
 /**/
@@ -164,18 +311,13 @@ this.main.save_handler = function(result){
 		$("div.submissionResult").html(json.responseText);
 		var id = $("input[name=id]").val();
 		//
-		if(String(id) == "0" || id == ""){
-			$("div.submissionResult").html("Create user success");
-			$("[name=btn-create]").removeClass("hidden");
-		}else{
-			$("div.submissionResult").html("Update user success");
-			//
-			$("input, select").prop("disabled",null);
-			$("[editable=0]").prop("disabled",1);
-			//
-			$("[name=btn-reset]").removeClass("hidden");
-			$("[name=btn-save]").removeClass("hidden");
-		}
+		$("div.submissionResult").html("Update profile success");
+		//
+		$("input, select").prop("disabled",null);
+		$("[editable=0]").prop("disabled",1);
+		//
+		$("[name=btn-reset]").removeClass("hidden");
+		$("[name=btn-save]").removeClass("hidden");
 	}catch(err){
 		$("div.submissionResult").html("Error: "+result.responseText);
 		$("input, select").prop("disabled",null);

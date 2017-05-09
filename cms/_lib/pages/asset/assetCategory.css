@@ -72,6 +72,24 @@ tr#template-mainList-row > td{
 	width:100%;
 }
 .filter-selecttable td:first-child{
-	width:10%;
+	width:70px;
 	padding-right:7px;
+	text-align:right;
+	font-size:11pt;
+}
+
+
+.assetCategoryDetail{
+	margin-top:20px;
+}
+.assetCategoryDetail td{
+	padding:3px 5px;
+}
+.assetCategoryDetail .asset-value{
+	font-weight:600;
+	font-size:10pt;
+}
+.assetCategoryDetail .asset-param{
+	width:30%;
+	font-size:10pt;
 }

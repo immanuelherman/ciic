@@ -93,7 +93,7 @@ if(!helper_API){
 				switch(JSON.stringify(response.status)){
 					case "422": 
 					case "401": 
-						location.replace("login");
+						//location.replace("login");
 						if(o.error_handler) o.error_handler(response);
 						break;
 					default:

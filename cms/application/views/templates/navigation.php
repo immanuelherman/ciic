@@ -20,10 +20,10 @@
 			</div>
 			<div>
 				<ul class="navigation-list">
-					<li navigation-id="posm"><a href="asset/posm" target="_self">POSM</a></li>
-					<li navigation-id="product"><a href="asset/product" target="_self">Products</a></li>
-					<li navigation-id="store"><a href="asset/store" target="_self">Store</a></li>
-					<li navigation-id="executable"><a href="asset/executable" target="_self">Executables</a></li>
+					<li navigation-id="asset/posm"><a href="asset/posm" target="_self">POSM</a></li>
+					<li navigation-id="asset/product"><a href="asset/product" target="_self">Products</a></li>
+					<li navigation-id="asset/store"><a href="asset/store" target="_self">Store</a></li>
+					<li navigation-id="asset/executable"><a href="asset/executable" target="_self">Executables</a></li>
 				</ul>
 			</div>
 			<div class="separator-top">
@@ -39,8 +39,10 @@
 <!-- JS -->
 <script>
 	var activeNav = "<?php echo($navigation);?>";
+	var ref = getUrlParameters("ref");
+	if(ref) activeNav = ref;
 	if(activeNav!=""){
-		$("li[navigation-id="+activeNav+"]").addClass("active");
+		$("li[navigation-id='"+activeNav+"']").addClass("active");
 	}
 </script>
 <script type="text/javascript" src="_lib/pages/navigation/navigation.js"></script>
