@@ -19,6 +19,7 @@ this.main.enter_keypress_handler = function(ev){
 this.main.register_click_handler = function(ev){
 	$(".login_container").addClass("hidden");
 	$(".register_container").removeClass("hidden");
+	register.init();
 }
 
 this.main.login_click_handler = function(ev){

@@ -101,7 +101,7 @@ button.btn-green:hover{
 }
 .page-content-topBar{
 	margin:10px 0px;
-	margin-bottom:20px;
+	*margin-bottom:20px;
 }
 .ihl0700_cTable_display select{
 	width:auto;

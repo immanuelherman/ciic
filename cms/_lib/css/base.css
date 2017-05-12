@@ -6,7 +6,8 @@ body{
 	width:100%;
 }
 button{
-	border:solid 1px #ddd;
+	*border:solid 1px #ddd;
+	border:none;
 	background-color:#ddd;
 	padding:3px 5px;
 }
@@ -52,7 +53,12 @@ input::placeholder, textarea::placeholder{
 :-moz-placeholder { /* Firefox 18- */
   color: #bbb;
 }
-
+.clickable{
+	cursor:pointer;
+}
+.clickable:hover{
+	background-color:#eee;
+}
 .table-standard{
 	width:100%;
 	border-collapse:collapse;
@@ -76,4 +82,7 @@ input::placeholder, textarea::placeholder{
 }
 .td-center{
 	text-align:center;
+}
+.valign-center{
+	vertical-align:middle;
 }

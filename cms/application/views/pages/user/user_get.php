@@ -9,11 +9,14 @@
 			<div class="page-content-main">
 				<div class="page-content-topBar">
 					<button name="btn-add" class="btn-green"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
-					<button name="btn-import" disabled><i class="fa fa-upload" aria-hidden="true"></i> Import(CSV)</button>
+					<!--<button name="btn-import" disabled><i class="fa fa-upload" aria-hidden="true"></i> Import(CSV)</button>-->
+					<button name="btn-deleteSelected" class="" disabled><i class="fa fa-times" aria-hidden="true"></i> Delete Selected</button>
+					<div class="deleteResult div_alert hidden"></div>
 				</div>
 				<table id="mainList" class="table-standard">
 					<thead>
 						<tr>
+							<th colName="selection-all" class="clickable td-center" style="text-align:center;" width="24px"><i name="icon-selection" class="fa fa-square-o"></i></th>
 							<th>#</th>
 							<th>Full Name</th>
 							<th class="hidden-xs">Email</th>
@@ -38,7 +41,8 @@
 <section id="templates" class="hidden">
 	<table>
 		<tr id="template-mainList-row">
-			<td colName="index"></td>
+			<td colName="selection" class="clickable td-center" width="24px"><i name="icon-selection" class="fa fa-square-o"></i></td>
+			<td colName="index" width="32px"></td>
 			<td colName="1"></td>
 			<td colName="2" class="hidden-xs"></td>
 			<td colName="3" class="hidden-xs hidden-sm hidden"></td>

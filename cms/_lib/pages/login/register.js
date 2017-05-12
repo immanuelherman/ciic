@@ -3,8 +3,17 @@ delete this.register;
 this.register = new Object();
 //
 this.register.init = function(){
+	$("button#register_submit").unbind();
+	$("button#register_cancel").unbind();
+	//
 	$("button#register_submit").click(this.save_click_handler.bind(this));
 	$("button#register_cancel").click(this.cancel_click_handler.bind(this));
+	//
+	$("button#register_cancel").removeClass("hidden");
+	$("button#register_submit").removeClass("hidden");
+	//
+	$("div.submissionResult").text("");
+	$("div.submissionResult").addClass("hidden");
 }
 this.register.save_click_handler = function(ev){
 	this.form_submit();
@@ -81,18 +90,18 @@ this.register.form_submit = function(){
 
 this.register.save_handler = function(result){
 	$("input, select, textarea").prop("disabled",null);
-	$("button#register_cancel").removeClass("hidden");
-	$("button#register_submit").removeClass("hidden");
 	//
 	try{
 		var json = JSON.parse(result);
 		if(json.responseStatus == "SUCCESS"){
-			$("div.submissionResult").html("Registration success. Site admin will process your request.");
+			$("div.submissionResult").html("Registration success. Site admin will process your request.<br/><a name='linkback' href='javascript:void(0);'> Back to login page</a>");
+			$("a[name='linkback']").click(this.cancel_click_handler.bind(this));
 		}
 	}catch(err){
-		console.log(result);
 		var failMsg = (result.responseJSON.error.message);
 		$("div.submissionResult").html("Registration Failed. "+failMsg);
+		$("button#register_cancel").removeClass("hidden");
+		$("button#register_submit").removeClass("hidden");
 	}
 	$("div.submissionResult").removeClass("hidden");
 }

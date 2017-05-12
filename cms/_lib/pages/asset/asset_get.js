@@ -22,6 +22,9 @@ this.main.init = function(){
 	//
 	$("[name=btn-add]").click(this.add_click_handler.bind(this));
 	//
+	$("th[colName=selection-all]").click(this.selectAll_click_handler.bind(this));
+	$("button[name='btn-deleteSelected']").click(this.deleteSelected_click_handler.bind(this));
+	//
 	this.requestMainList();
 }
 this.main.requestMainList = function(data){
@@ -87,6 +90,7 @@ this.main.parseList = function(data){
 		//
 		$item.find("[name=btn-edit]").click(this.edit_click_handler.bind(this));
 		$item.find("[name=btn-delete]").click(this.delete_click_handler.bind(this));
+		$item.find("[colName=selection]").click(this.select_click_handler.bind(this));
 		//
 		$("table#mainList tbody").append($item);
 	}
@@ -109,16 +113,102 @@ this.main.delete_click_handler = function(ev){
 	}
 }
 
+
+
+
+
+/* Checklist selectables */
+this.main.deleteSelected_click_handler = function(ev){
+	$("button[name='btn-deleteSelected']").addClass("hidden");
+	//
+	var $tr = $("table td i[name='icon-selection'].fa-check-square").closest("tr");
+	this.$selectedTd = new Array();
+	for(var i=0; i<$tr.length; i++){
+		this.$selectedTd.push($($tr.get(i)).attr("id"));
+	}
+	this.delTotal = this.$selectedTd.length;
+	//
+	var $ntf = $("div.deleteResult");
+	$ntf.removeClass("hidden");
+	$ntf.html("<i class='fa fa-spin fa-spinner'></i> Deleting.. (0 of "+$tr.length+")");
+	//
+	this.deleteSelected_exec();
+}
+this.main.deleteSelected_exec = function(result){
+	//console.log(result);
+	var $ntf = $("div.deleteResult");
+	$ntf.removeClass("hidden");
+	$ntf.html("<i class='fa fa-spin fa-spinner'></i> Deleting.. ("+(this.delTotal-this.$selectedTd.length)+" of "+this.delTotal+")");
+	//
+	if(result && result.status && result.status==500){
+		$ntf.html("<i class='fa fa-times'></i> Delete failed: Only user who upload the asset can delete it. Deleting process terminated.");
+		this.$selectedTd = null;
+		clearTimeout(this.refreshTableTimeout);
+		this.refreshTableTimeout = setTimeout(this.deleteSelected_refresh.bind(this), 5000);
+	}else{
+		if(this.$selectedTd.length>0){
+			var cid = this.$selectedTd.pop();
+			this.form_delete(cid, this.deleteSelected_exec);
+		}else{
+			$ntf.html("<i class='fa fa-check'></i> Delete completed");
+			clearTimeout(this.refreshTableTimeout);
+			this.refreshTableTimeout = setTimeout(this.deleteSelected_refresh.bind(this), 2000);
+		}
+	}
+}
+this.main.deleteSelected_refresh = function(){
+	clearTimeout(this.refreshTableTimeout);
+	$("button[name='btn-deleteSelected']").removeClass("hidden");
+	this.select_setState($("th[colName='selection-all']"), false);
+	this.list_table.request_data();
+}
+this.main.selectAll_click_handler = function(ev){
+	var $th = $(ev.target).closest("th");
+	var state = ($th.find("i[name='icon-selection']").hasClass("fa-square-o")) ? true : false;
+	this.select_setState($th, state);
+	//
+	var $table = $th.closest("table");
+	var $td = $table.find("tr > td[colName='selection']");
+	this.select_setState($td, state);
+}
+this.main.select_click_handler = function(ev){
+	var $td = $(ev.target).closest("td");
+	var state = ($td.find("i[name='icon-selection']").hasClass("fa-square-o")) ? true : false;
+	this.select_setState($td, state);
+}
+this.main.select_setState = function(elem, state){
+	var $icon = $(elem).find("i[name='icon-selection']");
+	if(state){
+		$icon.removeClass("fa-square-o");
+		$icon.addClass("fa-check-square");
+	}else{
+		$icon.addClass("fa-square-o");
+		$icon.removeClass("fa-check-square");
+	}
+	this.select_checkOverallState(elem);
+}
+this.main.select_checkOverallState = function(elem){
+	$sel = $(elem).closest("table").find("td i[name='icon-selection'].fa-check-square");
+	var ens = ($sel.length > 0) ? null : true;
+	$("button[name='btn-deleteSelected']").prop("disabled", ens);
+}
+
+
+
+
+
+
 //--------------------------------------------------------------------------------------------------------------------------------------------
 /* Delete */
-this.main.form_delete = function(id){
+this.main.form_delete = function(id, handler){
+	if(!handler) handler = this.delete_handler;
 	helper_API.sendXHR({
 		action:"Asset delete",
 		path:"/assets/"+id,
 		method:"DELETE",
 		data:null,
-		success_handler:this.delete_handler.bind(this),
-		error_handler:this.delete_handler.bind(this)
+		success_handler:handler.bind(this),
+		error_handler:handler.bind(this)
 	});
 }
 this.main.delete_handler = function(result){
