@@ -47,3 +47,13 @@
 .paging_list ul.list li.selectable{
 	cursor:pointer;
 }
+
+
+
+/**/
+.rowhide{
+	display:none;
+}
+.findhide{
+	display:none;
+}

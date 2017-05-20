@@ -7,7 +7,7 @@ this.main.init = function(){
 	if(ref) $("a[name=link-back]").attr("href", ref);
 	//
 	this.user = helper_API.session_get();
-	//
+	/*
 	this.list_table = new ihl0700_cTable();
 	this.list_table.table_update = function(d){
 		this.requestMainList(d);
@@ -24,7 +24,7 @@ this.main.init = function(){
 	});
 	//
 	$("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_search input[name=search]").attr("placeholder", "Name");
-	//
+	*/
 	this.requestMainList();
 }
 this.main.requestMainList = function(data){
@@ -94,23 +94,34 @@ this.main.parseList = function(data){
 	$("div.thumbnailContainer").append(thumbnail);
 	
 	// Listing files
-	var offset = (Number($("table#mainList").attr("page"))-1) * Number($("table#mainList").attr("display"));
+	$("input[name='link_download']").val(data.link_download);
+	$("[name=btn-download]").click(this.downloadAll_click_handler.bind(this));
+	
+	//var offset = (Number($("table#mainList").attr("page"))-1) * Number($("table#mainList").attr("display"));
 	var list = data.files;
+	var ctr=0;
 	for(var idx=0; idx<list.length; idx++){
-		var $item = $("tr#template-mainList-row").clone();
-		$item.attr("index", "file-"+idx);
-		$item.attr("id", list[idx].file_id);
-		$item.attr("src", list[idx].src);
-		$item.find("[colName=index]").html(offset+(idx+1));
-		$item.find("[colName=1]").html(list[idx].origin_name);
-		$item.find("[colName=2]").html(list[idx].type);
-		$item.find("[colName=3]").html(list[idx].size_KB);
-		//
-		$item.find("button[name='btn-assetDownload']").click(this.assetDownload_click_handler.bind(this));
-		//
-		$("table#mainList tbody").append($item);
+		if(list[idx].file_id && list[idx].size_KB){
+			ctr++;
+			var $item = $("tr#template-mainList-row").clone();
+			$item.attr("index", "file-"+idx);
+			$item.attr("id", list[idx].file_id);
+			list[idx].src = escape(list[idx].src);
+			$item.attr("src", list[idx].src);
+			$item.find("[colName=index]").attr("width","24");
+			$item.find("[colName=index]").html(ctr);
+			$item.find("[colName=1]").html(list[idx].origin_name);
+			$item.find("[colName=2]").html(list[idx].type);
+			$item.find("[colName=3]").html(list[idx].size_KB+" KB");
+			//
+			$item.find("button[name='btn-assetDownload']").click(this.assetDownload_click_handler.bind(this));
+			//
+			$("table#mainList tbody").append($item);
+		}
 	}
-	this.list_table.update(data);
+	this.list_table = new ihl0700_cTable();
+	this.list_table.constructor({$table:$("table#mainList")});
+	this.list_table.update();
 }
 this.main.edit_click_handler = function(ev){
 	var id = $("input[name='id']").val();
@@ -119,8 +130,11 @@ this.main.edit_click_handler = function(ev){
 this.main.assetDownload_click_handler = function(ev){
 	var $tr = $(ev.target).closest("tr");
 	var src = "/get_files"+$tr.attr("src");
-	console.log(src);
 	$("iframe[name=assetFilesIframe]").attr("src",api_url+src);
+}
+this.main.downloadAll_click_handler = function(ev){
+	var link = $("input[name='link_download']").val();
+	$("iframe[name=assetFilesIframe]").attr("src",api_url+link);
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------

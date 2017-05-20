@@ -1,0 +1,10 @@
+1. Module name must begin with uppercase and text lowercase follow
+2. If module has <space> then use "_"/underscore and word must in lower case
+3. All controllers file inside module must suffix with _module
+4. All views file inside module must suffix with _view
+5. All model file inside model must suffix with _model
+6. there is no check session on module controller, view or model. check session already on controller app
+7. validation user input must on all modules. never trust user input
+8. make sure there is no duplicate function cause it all on module. make each module function meaning
+9. controller name should be same as module name. if not possible then write readme.module to specify each module class and function detaill
+

@@ -126,6 +126,8 @@ ihl0700_cTable = function(){
 			o.offset = offset;
 			o.search = search;
 			this.requestFunction(o);
+		}else{
+			this.static_update();
 		}
 	}
 	
@@ -145,9 +147,9 @@ ihl0700_cTable = function(){
 	}
 	
 	this.update_paging = function(o){
-		var po = (o.pagination && o.pagination.current_number) ? o.pagination : new Object({current_number:1});
+		var po = (o && o.pagination && o.pagination.current_number) ? o.pagination : new Object({current_number:1});
 		var limit = Number(this.$table.attr("display"));
-		var total = Number(o.count);
+		var total = (o && o.count) ? Number(o.count) : this.$table.attr("total");
 		var currPage = this.$table.attr("page");
 		//
 		var d = ((po.current_number-1)*limit)+1;
@@ -192,11 +194,16 @@ ihl0700_cTable = function(){
 				show = [1,2,3,4,5,6,7,8,(p-1)];
 				this.$widget_list.find("ul.list li[data-id="+(p-1)+"]").before("<li>..</li>");
 			}
-			while(show.length>0){
-				var sid = show.pop();
-				this.$widget_list.find("ul.list li[data-id="+sid+"]").removeClass("hidden");
+			if(show){
+				while(show.length>0){
+					var sid = show.pop();
+					this.$widget_list.find("ul.list li[data-id="+sid+"]").removeClass("hidden");
+				}
 			}
 		}
+		
+		// static page rearrangement
+		this.static_rearrange();
 	}
 	
 	this.paging_list_click = function(ev){
@@ -205,6 +212,66 @@ ihl0700_cTable = function(){
 		this.$table.attr("page", np)
 		this.request_data();
 	}
+	
+	
+	
+	
+	
+	
+	
+	/* Static */
+	this.static_rearrange = function(){
+		// Only for static table
+		if(!this.requestFunction){
+			var $tr = this.$table.find("tbody tr").filter(":not(.findhide)");
+			//
+			var limit = Number(this.$table.attr("display"));
+			var total = this.$table.attr("total");
+			var currPage = this.$table.attr("page");
+			//
+			$tr.addClass("rowhide");
+			var offset = Number((currPage-1) * limit);
+			for(var idx=offset; idx<(offset+limit) && idx<$tr.length; idx++){
+				if($($tr[idx]).length>0) $($tr[idx]).removeClass("rowhide");
+			}
+		}
+	}
+	
+	this.static_search = function(){
+		var search = this.$table.attr("search");
+		var key = String(search).toLowerCase();
+		//var $tr = this.$table.find("tbody tr").filter(":not(.hide)");
+		var $tr = this.$table.find("tbody tr");
+		//
+		if(key && key!=""){
+			this.$table.attr("searchmode", 1);
+			$tr.addClass("findhide");
+			for(var idx=0; idx<$tr.length; idx++){
+				var $item = $($tr.get(idx));
+				if(String($item.text().toLowerCase()).indexOf(key)>=0){
+					$item.removeClass("findhide");
+					$item.removeClass("rowhide");
+				}
+			}
+		}else{
+			this.$table.attr("searchmode", 0);
+			$tr.removeClass("findhide");
+			
+		}
+		this.$table.attr("page",0);
+	}
+	
+	this.static_update = function(){
+		var search = this.$table.attr("search");
+		var sorts = String(this.$table.attr("sorts"));
+		var page = this.$table.attr("page");
+		var perPage = this.$table.attr("display");
+		var offset = (Number(this.$table.attr("page"))-1)*Number(this.$table.attr("display"));
+		//	
+		this.static_search();
+		this.update();
+	}
+	
 };
 
 

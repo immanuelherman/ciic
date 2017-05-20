@@ -66,7 +66,14 @@
 			<div class="div_alert hidden" style="margin-bottom:5px;"></div>
 			<div class="page-content-main">
 				<iframe name="iframe-assetDownload" class="hidden"></iframe>
-				<table id="mainList" class="table-standard assetCategory">
+				
+				<div class="displayStyleContainer">
+					<button name="displayStyle"><i class="fa fa-th"></i></button>
+				</div>
+				
+				<div id="mainList_card" class="row mainList_card"></div>
+				
+				<table id="mainList" class="table-standard assetCategory hidden">
 					<thead class="hidden">
 						<tr>
 							<th>Asset</th>
@@ -82,6 +89,36 @@
 
 
 <section id="templates" class="hidden">
+	
+	<div id="template-mainList_card-item" class="mainList_card-item col-xs-6 col-sm-4 col-md-3 col-lg-3 col-tight">
+		<div class="mainList_card-item-content">
+			<div class="mainList_card-image">
+				<table>
+					<tr><td valign="middle"><img src="_lib/images/no_image.png"></img></td></tr>
+				</table>
+			</div>
+			<div class="mainList_card-item-content-text">
+				<div class="mainList_card-title"><a><span colName="title"></span></a></div>
+				<div class="mainList_card-detail">
+					<table width="100%">
+						<tr>
+							<td class="mainList_card-content"><i class="fa fa-map-marker"></i> <span colName="country">-</span></td>
+							<td class="mainList_card-content"><i class="fa fa-star-o"></i> <span colName="brand">-</span></td>
+						</tr>
+						<tr>
+							<td class="mainList_card-content"><i class="fa fa-tag"></i> <span colName="asset_type">-</span></td>
+							<td class="mainList_card-content"><i class="fa fa-user"></i> <span colName="unilever_contact">-</span></td>
+						</tr>
+					</table>
+				</div>
+				<div style="text-align:left; margin-top:7px;">
+					<button name="btn-download" class="btn-blue"><i class="fa fa-download"></i></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- -->
 	<table>
 		<tr id="template-mainList-row" class="assetCategory-tr">
 			<td colName="1" style="width:100%;">

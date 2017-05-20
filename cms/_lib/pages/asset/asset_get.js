@@ -88,6 +88,8 @@ this.main.parseList = function(data){
 		$item.find("[colName=6]").html(list[idx].status);
 		$item.find("[colName=7]").html(list[idx].owner);
 		//
+		$item.find("[colName='thumbnail'] img").attr("src", api_url+list[idx].collection.thumbnail);
+		//
 		$item.find("[name=btn-edit]").click(this.edit_click_handler.bind(this));
 		$item.find("[name=btn-delete]").click(this.delete_click_handler.bind(this));
 		$item.find("[colName=selection]").click(this.select_click_handler.bind(this));

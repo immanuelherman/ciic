@@ -17,12 +17,13 @@
 						<tr>
 							<th colName="selection-all" class="clickable td-center" style="text-align:center;" width="24px"><i name="icon-selection" class="fa fa-square-o"></i></th>
 							<th>#</th>
+							<th class="hidden-xs"></th>
 							<th>Title</th>
 							<th>Asset Type</th>
 							<th class="hidden-xs hidden-sm">Brand</th>
 							<th class="hidden-xs hidden-sm">Country</th>
-							<th class="hidden-xs hidden-sm hidden-md">Unilever Contact</th>
-							<th class="hidden-xs hidden-sm hidden-md">Status</th>
+							<th class="hidden-xs hidden-sm hidden-md">Contact</th>
+							<th class="hidden-xs hidden-sm hidden-md hidden">Status</th>
 							<th class="hidden-xs hidden-sm">Owner</th>
 							<th></th>
 							<th></th>
@@ -42,12 +43,13 @@
 		<tr id="template-mainList-row">
 			<td colName="selection" class="clickable td-center" width="24px"><i name="icon-selection" class="fa fa-square-o"></i></td>
 			<td colName="index"></td>
+			<td colName="thumbnail" class="hidden-xs"><img src="_lib/images/no_image_small.png"></img></td>
 			<td colName="1"></td>
 			<td colName="2"></td>
 			<td colName="3" class="hidden-xs hidden-sm"></td>
 			<td colName="4" class="hidden-xs hidden-sm"></td>
 			<td colName="5" class="hidden-xs hidden-sm hidden-md"></td>
-			<td colName="6" class="hidden-xs hidden-sm hidden-md"></td>
+			<td colName="6" class="hidden-xs hidden-sm hidden-md hidden"></td>
 			<td colName="7" class="hidden-xs hidden-sm"></td>
 			<td class="td-center">
 				<button class="btn-blue" name="btn-download"><i class="fa fa-download"></i> <span class="hidden-xs">Download</span></button> 
@@ -65,5 +67,6 @@
 <script type="text/javascript" src="_lib/pages/asset/asset_get.js"></script>
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="_lib/pages/login/login.css">
+<link rel="stylesheet" type="text/css" href="_lib/pages/asset/assetCategory.css">
 
 

@@ -13,6 +13,7 @@
 			<div class="div_alert hidden" style="margin-bottom:5px;"></div>
 			<div class="assetCategoryDetail">
 				<input type="hidden" name="id" value="<?php echo($id);?>" disabled />
+				<input type="hidden" name="link_download" disabled />
 				
 				<div class="row">
 					<div class="col-sm-12">
@@ -75,6 +76,9 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="subtitle" style="margin-bottom:10px;">Asset Files</div>
+						<div style="margin-bottom:10px;">
+							<button name="btn-download" class="btn-blue"><i class="fa fa-download"></i> Download All (zip)</button>
+						</div>
 						<iframe class="hidden" name="assetFilesIframe"></iframe>
 						<table id="mainList" class="table-standard">
 							<thead>
@@ -82,7 +86,7 @@
 									<th>#</th>
 									<th>Filename</th>
 									<th class="hidden-md">Type</th>
-									<th class="hidden-xs" style="text-align:center;">Size (KB)</th>
+									<th class="hidden-xs" style="text-align:center;">Size</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -102,11 +106,11 @@
 <section id="templates" class="hidden">
 	<table>
 		<tr id="template-mainList-row">
-			<td colName="index"></td>
-			<td colName="1"></td>
-			<td colName="2" class="hidden-xs hidden-sm hidden-md"></td>
-			<td colName="3" class="hidden-xs" style="text-align:center;"></td>
-			<td class="td-center">
+			<td colName="index" width="24"></td>
+			<td colName="1" width="65%"></td>
+			<td colName="2" class="hidden-xs hidden-sm hidden-md" width="40"></td>
+			<td colName="3" class="hidden-xs" style="text-align:center;" width="100"></td>
+			<td class="td-center" width="40">
 				<button name="btn-assetDownload">Download</button>
 			</td>
 		</tr>
