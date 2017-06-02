@@ -27,8 +27,18 @@ this.main.init = function(){
 	$("div#ihl0700_cTable_container_mainList .ihl0700_cTable_top").prepend($("div.displayStyleContainer"));
 	$("button[name='displayStyle']").click(this.switchDisplayStyle.bind(this));
 	//
+	$("select[name]").change(this.filter_change_handler.bind(this));
+	//
 	this.requestMainList();
 }
+
+
+this.main.filter_change_handler = function(ev){
+	//console.log($(ev.target).val());
+	this.list_table.request_data();
+}
+
+
 this.main.switchDisplayStyle = function(ev){
 	var $i = $("button[name='displayStyle'] i");
 	if($i.hasClass("fa-th")){
@@ -45,7 +55,9 @@ this.main.switchDisplayStyle = function(ev){
 }
 
 this.main.requestMainList = function(data){
+	console.log(data);
 	var limit = ($("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_display select").val());
+	//
 	if(data){
 		if(data.perPage){
 			data.limit = data.perPage;
@@ -58,12 +70,23 @@ this.main.requestMainList = function(data){
 			delete data.page;
 		}
 	}
-	if(!data){
-		var data = new Object({limit:limit});
+	if(!data) var data = new Object({limit:limit});
+	
+	// Asset Type
+	if(asset_type) data.asset_type = asset_type;
+	
+	// Filter
+	var $filters = $("select[name]");
+	for(var i=0; i<$filters.length; i++){
+		var pname = $($filters.get(i)).attr("name");
+		data[pname] = null;
+		delete data[pname];
+		if($($filters.get(i)).val()!="0"){
+			data[pname] = $($filters.get(i)).val();
+		}
 	}
-	if(asset_type){
-		data.asset_type = asset_type;
-	}
+	
+	// Send request
 	helper_API.sendXHR({
 		action:"get assets",
 		path:"/assets",
@@ -76,15 +99,15 @@ this.main.requestMainList = function(data){
 this.main.getList_handler = function(result){
 	try{
 		result = JSON.parse(result);
-		if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
-			$("div.div_alert").addClass("hidden");
-			this.parseList(result);
-		}else{
-			$("div.div_alert").removeClass("hidden");
-			$("div.div_alert").html(result.responseText);
-		}
 	}catch(err){
 		console.log("error");
+		$("div.div_alert").removeClass("hidden");
+		$("div.div_alert").html(result.responseText);
+	}
+	if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
+		$("div.div_alert").addClass("hidden");
+		this.parseList(result);
+	}else{
 		$("div.div_alert").removeClass("hidden");
 		$("div.div_alert").html(result.responseText);
 	}
@@ -104,8 +127,12 @@ this.main.parseList = function(data){
 			if(list[idx][n]=="") list[idx][n]="-"
 			$item.find("[colname="+n+"]").html(list[idx][n]);
 		}
-		if(list[idx].collection && list[idx].collection.thumbnail){ 
-			$item.find(".asset-thumbnail img").attr("src", String(api_url+list[idx].collection.thumbnail));
+		if(list[idx].thumbnail["/"] && list[idx].thumbnail["/"].length>0){
+			$item.find(".asset-thumbnail").empty();
+			for(var i=0; i<list[idx].thumbnail["/"].length; i++){
+				var url = api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][i]);
+				$item.find(".asset-thumbnail").append("<img src='"+url+"' />");
+			}
 		}
 		
 		$item.find("[name=btn-detail]").click(this.detail_click_handler.bind(this));
@@ -138,7 +165,6 @@ this.main.renderListCard = function(data){
 	$cl.empty();
 	//
 	var list = data.data;
-	console.log(list);
 	for(var idx=0; idx<list.length; idx++){
 		var $item = $("div#template-mainList_card-item").clone();
 		//console.log($item);
@@ -150,13 +176,21 @@ this.main.renderListCard = function(data){
 			if(list[idx][n]=="") list[idx][n]="-"
 			$item.find("[colname="+n+"]").html(list[idx][n]);
 		}
-		$item.find(".mainList_card-image img").attr("src", String(api_url+list[idx].collection.thumbnail));
+		//$item.find(".mainList_card-image img").attr("src", String(api_url+list[idx].collection.thumbnail));
+		
+		if(list[idx].thumbnail["/"] && list[idx].thumbnail["/"].length>0){
+			var url = api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][0]);
+			$item.find(".mainList_card-image img").attr("src", url);
+		}
+		
 		//
 		$item.find(".mainList_card-title, .mainList_card-image").click(this.detail_click_handler.bind(this));
 		$item.find("[name=btn-download]").click(this.download_click_handler.bind(this));
 		//
 		$cl.append($item);
 	}
+	
+	$('.fotorama').fotorama();
 }
 
 

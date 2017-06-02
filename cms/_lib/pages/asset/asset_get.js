@@ -27,7 +27,22 @@ this.main.init = function(){
 	//
 	this.requestMainList();
 }
+this.main.show_status = function(show, msg, $elem){
+	$elem = ($($elem).length>0) ? $($elem) : $("div.div_alert");
+	if(show && msg){
+		$elem.removeClass("hidden");
+		$elem.html(msg);
+	}else{
+		$elem.addClass("hidden");
+		$elem.text("");
+	}
+}
+
+
+/**/
 this.main.requestMainList = function(data){
+	this.show_status(true, "<i class='fa fa-spinner fa-spin'></i> Retrieving list..", $(".notificationBar"));
+	//
 	var limit = ($("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_display select").val());
 	if(data){
 		if(data.perPage){
@@ -56,18 +71,17 @@ this.main.requestMainList = function(data){
 this.main.getList_handler = function(result){
 	try{
 		result = JSON.parse(result);
-		console.log(result);
-		if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
-			$("div.div_alert").addClass("hidden");
-			this.parseList(result);
-		}else{
-			$("div.div_alert").removeClass("hidden");
-			$("div.div_alert").html(result.responseText);
-		}
 	}catch(err){
-		console.log("error");
-		$("div.div_alert").removeClass("hidden");
-		$("div.div_alert").html(result.responseText);
+		var msg = (result.responseText) ? result.responseText : "Error. Parsing failed";
+		this.show_status(true, result.responseText, $(".notificationBar"));
+	}
+	//
+	if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
+		this.show_status(false);
+		this.parseList(result);
+	}else{
+		var msg = (result.responseText) ? result.responseText : "Error. Parsing failed";
+		this.show_status(true, result.responseText, $(".notificationBar"));
 	}
 }
 this.main.parseList = function(data){
@@ -88,7 +102,9 @@ this.main.parseList = function(data){
 		$item.find("[colName=6]").html(list[idx].status);
 		$item.find("[colName=7]").html(list[idx].owner);
 		//
-		$item.find("[colName='thumbnail'] img").attr("src", api_url+list[idx].collection.thumbnail);
+		if(list[idx].thumbnail && list[idx].thumbnail["/"].length>0){
+			$item.find("[colName='thumbnail'] img").attr("src", api_url+list[idx].thumbnail.root_path+"/"+list[idx].thumbnail["/"][0]);
+		}
 		//
 		$item.find("[name=btn-edit]").click(this.edit_click_handler.bind(this));
 		$item.find("[name=btn-delete]").click(this.delete_click_handler.bind(this));
@@ -137,24 +153,23 @@ this.main.deleteSelected_click_handler = function(ev){
 	this.deleteSelected_exec();
 }
 this.main.deleteSelected_exec = function(result){
-	//console.log(result);
 	var $ntf = $("div.deleteResult");
 	$ntf.removeClass("hidden");
-	$ntf.html("<i class='fa fa-spin fa-spinner'></i> Deleting.. ("+(this.delTotal-this.$selectedTd.length)+" of "+this.delTotal+")");
+	this.show_status(true, "<i class='fa fa-spin fa-spinner'></i> Deleting.. ("+(this.delTotal-this.$selectedTd.length)+" of "+this.delTotal+")", $(".notificationBar"));
 	//
 	if(result && result.status && result.status==500){
-		$ntf.html("<i class='fa fa-times'></i> Delete failed: Only user who upload the asset can delete it. Deleting process terminated.");
+		this.show_status(true, "<i class='fa fa-times'></i> Delete failed: Only user who upload the asset can delete this item.");
 		this.$selectedTd = null;
 		clearTimeout(this.refreshTableTimeout);
-		this.refreshTableTimeout = setTimeout(this.deleteSelected_refresh.bind(this), 5000);
+		this.refreshTableTimeout = setTimeout(this.deleteSelected_refresh.bind(this), 3500);
 	}else{
 		if(this.$selectedTd.length>0){
 			var cid = this.$selectedTd.pop();
 			this.form_delete(cid, this.deleteSelected_exec);
 		}else{
-			$ntf.html("<i class='fa fa-check'></i> Delete completed");
+			this.show_status(true, "<i class='fa fa-check'></i> Delete completed");
 			clearTimeout(this.refreshTableTimeout);
-			this.refreshTableTimeout = setTimeout(this.deleteSelected_refresh.bind(this), 2000);
+			this.refreshTableTimeout = setTimeout(this.deleteSelected_refresh.bind(this), 1200);
 		}
 	}
 }

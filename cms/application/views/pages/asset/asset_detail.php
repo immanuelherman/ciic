@@ -2,21 +2,28 @@
 	
 	<div class="page-container">
 		<div class="page-header">
-			<div class="div_bigtitle">Asset <span name="action"><?php echo($actionType);?></span></div> 
+			<div class="backnav">
+				<!--<a name="link-back" href="asset/get" target="_self"><i class="fa fa-arrow-left"></i></a>-->
+				<button name="btn-back"><i class="fa fa-chevron-left"></i></button>
+			</div>
+			<div class="div_bigtitle">
+				<span>Asset <span name="action"><?php echo($actionType);?></span></span>
+			</div> 
 		</div>
 		
 		<div class="page-content">
-			<a name="link-back" href="asset/get" target="_self"><i class="fa fa-angle-left"></i> Back</a>
+			
 			<div class="div_alert hidden" style="margin-bottom:5px;"></div>
 			<div class="formContent">
 				<input type="hidden" name="id" value="<?php echo($id);?>" disabled />
+				<input type="hidden" name="link_download" disabled />
 				
 				<div class="row">
 					<div class="col-sm-4 col-md-3">
 						<div>
 							<div class="subtitle">Asset Type</div>
 							<select class="register_input" type="text" name="assetType" id="assetType" disabled>
-								<option value="posm">POSM</option>
+								<option value="posm" selected>POSM</option>
 								<option value="product">Product</option>
 								<option value="store">Store</option>
 								<option value="executable">Executable</option>
@@ -25,20 +32,26 @@
 					</div>
 				</div>
 				
+				
 				<div style="border-top:solid 1px #ddd; margin-top:10px; padding-top:10px;"></div>
 				<div class="row">
 					<div class="col-sm-4 col-md-3">
 						<div>
 							<div class="subtitle">Asset Thumbnail</div>
 							<input type="file" accept="image/*" name="assetThumbnail" id="assetThumbnail" multiple></input>
+							<!--
+							<div>
+								<button class="btn-green" id="btn-thumbnail" name="btn-thumbnail"><i class="fa fa-upload"></i> Choose Thumbnail</button>
+							</div>
+							-->
 						</div>
 					</div>
 				</div>
 				<div class="assetThumbnailList hidden">
 					<div class="row">
-						<div class="col-xs-12 col-sm-8 col-md-6 col-lg-6" >
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" >
 							<div class="div_smalltext"><span>Note: Uploading new thumbnail with overwrite the current</span></div>
-							<div class="assetContent thumbnailContainer" style="border:solid 1px #ccc; padding:10px;">
+							<div class="assetContent thumbnailContainer" style="padding:5px;">
 							</div>
 						</div>
 					</div>
@@ -49,13 +62,16 @@
 					<div class="col-sm-4 col-md-3">
 						<div>
 							<div class="subtitle">Asset File (.zip)</div>
-							<input type="file" accept=".zip" name="assetFile" id="assetFile"></input>
+							<!--<input type="file" accept=".zip" name="assetFile" id="assetFile"></input>-->
+							<div>
+								<button class="btn-green" id="btn-zip" name="btn-zip"><i class="fa fa-upload"></i> Choose File</button>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="assetFilesList hidden">
 					<div class="row">
-						<div class="col-sm-12 col-md-8 col-lg-6" >
+						<div class="col-sm-12 col-md-8 col-lg-8" >
 							<div class="div_smalltext"><span>Note: Uploading new asset file (.zip) will overwrite old files</span></div>
 							<iframe class="hidden" name="assetFilesIframe"></iframe>
 							<div class="assetContent" style="border:solid 1px #ccc; padding:10px;">
@@ -64,8 +80,8 @@
 										<tr>
 											<th>#</th>
 											<th>Filename</th>
-											<th class="hidden-md">Type</th>
-											<th class="hidden-xs">Size (KB)</th>
+											<th class="hidden-md hidden">Type</th>
+											<th class="hidden-xs hidden">Size (KB)</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -94,29 +110,35 @@
 							<div class="subtitle">Objective</div>
 							<input class="register_input" type="text" name="objective" id="objective" placeholder="Objective"></input>
 						</div>
-						<div>
-							<div class="subtitle">Background</div>
-							<textarea class="register_input" type="text" name="background" id="background" placeholder="Background"></textarea>
-						</div>
+						
 					</div>
+					
 					<div class="col-sm-4 col-md-3">
 						<div>
-							<div class="subtitle">Content</div>
+							<div class="subtitle">Repeatable Model</div>
+							<input class="register_input" type="text" name="repeatable_model" id="repeatable_model" placeholder="Yes / No"></input>
+						</div>
+						<div>
+							<div class="subtitle">Content Overview</div>
 							<input class="register_input" type="text" name="content" id="content" placeholder="Content"></input>
 						</div>
 						<div>
 							<div class="subtitle">Outcome</div>
 							<input class="register_input" type="text" name="outcome" id="outcome" placeholder="Outcome"></input>
 						</div>
+					</div>
+					
+					<div class="col-sm-4 col-md-3">
 						<div>
-							<div class="subtitle">Repeatable Model</div>
-							<input class="register_input" type="text" name="repeatable_model" id="repeatable_model" placeholder="Yes / No"></input>
+							<div class="subtitle">Background</div>
+							<textarea class="register_input" type="text" name="background" id="background" placeholder="Background"></textarea>
 						</div>
 						<div>
 							<div class="subtitle">Additional Comment</div>
 							<textarea class="register_input" type="text" name="additional_comment" id="additional_comment" placeholder="Additional Comment"></textarea>
 						</div>
 					</div>
+					
 				</div>
 				
 				<div style="border-top:solid 1px #ddd; margin-top:10px; padding-top:10px;"></div>
@@ -125,7 +147,7 @@
 					<div class="col-sm-4 col-md-3">
 						<div>
 							<div class="subtitle">Project Type</div>
-							<input class="register_input" type="number" name="phone" id="phone" placeholder="658881234"></input>
+							<input class="register_input" type="number" name="project_type" id="project_type" placeholder="type"></input>
 						</div>
 						<div>
 							<div class="subtitle">Brand</div>
@@ -189,9 +211,6 @@
 				</div>
 				
 				
-				
-				
-				
 				<div class="div_smalltext">*Required</div>
 				<div class="submissionBar">
 					<div class="submissionResult div_alert hidden"></div>
@@ -214,8 +233,8 @@
 		<tr id="template-mainList-row">
 			<td colName="index"></td>
 			<td colName="1"></td>
-			<td colName="2" class="hidden-xs hidden-sm hidden-md"></td>
-			<td colName="3" class="hidden-xs" style="text-align:center;"></td>
+			<td colName="2" class="hidden-xs hidden-sm hidden-md hidden"></td>
+			<td colName="3" class="hidden-xs hidden" style="text-align:center;"></td>
 			<td class="td-center">
 				<button name="btn-assetDownload">Download</button>
 			</td>
@@ -224,6 +243,8 @@
 </section>
 	
 <!-- JS -->
+<script type="text/javascript" src="_lib/js/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="_lib/pages/asset/asset_detail_pluploader.js"></script>
 <script type="text/javascript" src="_lib/pages/asset/asset_detail.js"></script>
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="_lib/pages/login/login.css">

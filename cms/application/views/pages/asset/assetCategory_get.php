@@ -2,8 +2,8 @@
 <div class="page-wrapper">
 	<div class="page-container">
 		<div class="page-header">
-			<div style="clear:both; float:right; margin-top:-7px;">
-				<button name="btn-add" class="btn-green"><i class="fa fa-upload" aria-hidden="true"></i> Upload New</button>
+			<div class="headerRightFloat">
+				<button name="btn-add" class="btn-green"><i class="fa fa-upload" aria-hidden="true"></i></button>
 			</div>
 			<div class="div_bigtitle"><?php echo($page_title);?></div>
 		</div>
@@ -16,7 +16,7 @@
 							<td><span>Brand</span></td>
 							<td>
 								<select name="brand">
-									<option>All</option>
+									<option value="0">All</option>
 								</select>
 							</td>
 						</tr>
@@ -28,8 +28,12 @@
 						<tr>
 							<td><span>Country</span></td>
 							<td>
-								<select name="brand">
-									<option>All</option>
+								<select name="country">
+									<option value="0">All</option>
+									<option value="china">China</option>
+									<option value="singapore">Singapore</option>
+									<option value="united kingdom">United Kingdom</option>
+									<option value="united states">United States</option>
 								</select>
 							</td>
 						</tr>
@@ -40,8 +44,8 @@
 						<tr>
 							<td><span>Type</span></td>
 							<td>
-								<select name="brand">
-									<option>All</option>
+								<select name="type">
+									<option value="0">All</option>
 								</select>
 							</td>
 						</tr>
@@ -52,8 +56,8 @@
 						<tr>
 							<td><span>Category</span></td>
 							<td>
-								<select name="brand">
-									<option>All</option>
+								<select name="category">
+									<option value="0">All</option>
 								</select>
 							</td>
 						</tr>
@@ -124,7 +128,7 @@
 			<td colName="1" style="width:100%;">
 				<div class="row assetCategory-content">
 					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-tight">
-						<div class="asset-thumbnail"><img src="_lib/images/no_image.png"></div>
+						<div class="asset-thumbnail fotorama" data-auto="false"><img src="_lib/images/no_image.png"></div>
 					</div>
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 assetListContainer">
 						<div class="row asset-title">

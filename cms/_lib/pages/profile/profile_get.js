@@ -5,7 +5,6 @@ this.main = new Object();
 this.main.init = function(){
 	$("[name=btn-create]").click(this.createAnother_click_handler.bind(this));
 	//
-	
 	this.list_table = new ihl0700_cTable();
 	this.list_table.table_update = function(d){
 		this.requestMainList(d);
@@ -25,6 +24,8 @@ this.main.init = function(){
 	//
 	$("th[colName=selection-all]").click(this.selectAll_click_handler.bind(this));
 	$("button[name='btn-deleteSelected']").click(this.deleteSelected_click_handler.bind(this));
+	$("button[name='btn-passwordChange']").click(this.passwordChange_click_handler.bind(this));
+	$("button[name='btn-passwordChangeExec']").click(this.passwordChangeExec_click_handler.bind(this));
 	//
 	var user = helper_API.session_get();
 	this.getData(user.data.user_id);
@@ -256,8 +257,6 @@ this.main.form_submit = function(){
 	var id = this.id;
 	var data = new Object();
 	data.email = $("input[name=email]").val();
-	data.password = $("input[name=password]").val();
-	data.passconf = $("input[name=passconf]").val();
 	data.first_name = $("input[name=firstname]").val();
 	data.last_name = $("input[name=lastname]").val();
 	data.department = $("input[name=department]").val();
@@ -271,12 +270,6 @@ this.main.form_submit = function(){
 	var eM = new Array();
 	var eF = true;
 	if(data.email == "" || !this.validateEmail(data.email)){eM.push("Invalid Email"); eF = false;}
-	if(data.password != "" && data.password != data.passconf){
-		eM.push("Password doesn't match"); eF = false;
-	}else{
-		delete data.password;
-		delete data.passconf;
-	}
 	if(data.first_name == ""){eM.push("First name is required"); eF = false;}
 	if(data.last_name == ""){eM.push("Last name is required"); eF = false;}
 	if(data.contact == ""){eM.push("Phone is required"); eF = false;}
@@ -295,7 +288,7 @@ this.main.form_submit = function(){
 	}
 	
 	helper_API.sendXHR({
-		action:"user post",
+		action:"user update",
 		path:path,
 		method:method,
 		data:data,
@@ -339,6 +332,59 @@ this.main.createAnother_click_handler = function(ev){
 	$("[name=btn-reset]").removeClass("hidden");
 	$("[name=btn-save]").removeClass("hidden");
 }
+
+
+
+
+
+/* Change Password */
+this.main.passwordChange_click_handler = function(ev){
+	$(".password-edit").removeClass("hidden");
+	$("button[name='btn-passwordChange']").addClass("hidden");
+}
+this.main.passwordChangeExec_click_handler = function(ev){
+	$("div.passwordSubmissionResult").removeClass("hidden");
+	//
+	var data = new Object();
+	data.oldpassword = $("input[name=oldpassword]").val();
+	data.password = $("input[name=password]").val();
+	data.passconf = $("input[name=passconf]").val();
+	//
+	var eF = true;
+	var eM = new Array();
+	if(data.oldpassword == ""){eM.push("Please type current password"); eF = false;}
+	if(data.password == ""){eM.push("Please type new password"); eF = false;}
+	if(data.password != data.passconf){eM.push("New Password doesn't match"); eF = false;}
+	if(!eF){
+		$("div.passwordSubmissionResult").html(eM.join("<br/>"));
+		return null;
+	}else{
+		$("div.passwordSubmissionResult").html("<i class='fa fa-spin fa-spinner'></i> Update password..");
+		$("input[type='password']").prop("disabled",1);
+	}
+	
+	var method = "PUT";
+	var path = "/profile/password";
+	helper_API.sendXHR({
+		action:"password update",
+		path:path,
+		method:method,
+		data:data,
+		success_handler:this.passwordChange_handler.bind(this),
+		error_handler:this.passwordChange_handler.bind(this)
+	});
+	
+}
+this.main.passwordChange_handler = function(result){
+	$("input[type='password']").prop("disabled", null);
+	$("[editable=0]").prop("disabled",1);
+	if(!result.error){
+		$("div.passwordSubmissionResult").html("Password change success");
+	}else{
+		$("div.passwordSubmissionResult").html("Error. Password remain unchanged");
+	}
+}
+
 
 
 

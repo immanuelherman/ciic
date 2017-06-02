@@ -70,7 +70,7 @@ this.register.form_submit = function(){
 	}
 	//
 	var method = (String(id) != "0" && id != "") ? "PUT" : "POST";
-	var path = (String(id) != "0" && id != "") ? "/users/"+id : "/users";
+	var path = (String(id) != "0" && id != "") ? "/users/"+id : "/public/users";
 	if(String(id) != "0" && id != ""){
 		delete data.email;
 		//delete data.password;

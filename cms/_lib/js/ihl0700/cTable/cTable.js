@@ -144,6 +144,8 @@ ihl0700_cTable = function(){
 	
 	this.update = function(o){
 		this.update_paging(o);
+		// static page rearrangement
+		this.static_rearrange();
 	}
 	
 	this.update_paging = function(o){
@@ -202,14 +204,13 @@ ihl0700_cTable = function(){
 			}
 		}
 		
-		// static page rearrangement
-		this.static_rearrange();
+		
 	}
 	
 	this.paging_list_click = function(ev){
 		var $li = $(ev.target).closest("li[data-page]");
 		var np = $li.attr("data-page");
-		this.$table.attr("page", np)
+		this.$table.attr("page", np);
 		this.request_data();
 	}
 	
@@ -224,12 +225,13 @@ ihl0700_cTable = function(){
 		// Only for static table
 		if(!this.requestFunction){
 			var $tr = this.$table.find("tbody tr").filter(":not(.findhide)");
+			$tr.addClass("rowhide");
 			//
 			var limit = Number(this.$table.attr("display"));
-			var total = this.$table.attr("total");
-			var currPage = this.$table.attr("page");
+			this.$table.attr("total", $tr.length);
+			this.update_paging();
 			//
-			$tr.addClass("rowhide");
+			var currPage = this.$table.attr("page");
 			var offset = Number((currPage-1) * limit);
 			for(var idx=offset; idx<(offset+limit) && idx<$tr.length; idx++){
 				if($($tr[idx]).length>0) $($tr[idx]).removeClass("rowhide");
@@ -252,13 +254,12 @@ ihl0700_cTable = function(){
 					$item.removeClass("findhide");
 					$item.removeClass("rowhide");
 				}
+				this.$table.attr("page",1);
 			}
 		}else{
 			this.$table.attr("searchmode", 0);
 			$tr.removeClass("findhide");
-			
 		}
-		this.$table.attr("page",0);
 	}
 	
 	this.static_update = function(){
@@ -267,7 +268,7 @@ ihl0700_cTable = function(){
 		var page = this.$table.attr("page");
 		var perPage = this.$table.attr("display");
 		var offset = (Number(this.$table.attr("page"))-1)*Number(this.$table.attr("display"));
-		//	
+		//
 		this.static_search();
 		this.update();
 	}

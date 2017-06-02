@@ -62,9 +62,13 @@ button.btn-green:hover{
 	color:#241673;
 }
 .div_bigtitle{
+	display:inline-block;
+	vertical-align:middle;
+	padding:7px 10px;
 	text-align:left;
 	font-size:12pt;
 	font-weight:600;
+	letter-spacing: 0.1pt;
 	color:#241673;
 }
 .div_smalltext{
@@ -75,24 +79,24 @@ button.btn-green:hover{
 	*font-weight:600;
 }
 .div_alert{
-	background-color:#eee;
-	padding:5px;
+	background-color:#ffa;
+	padding:5px 10px;
 	width:100%;
 	font-size:10pt;
 	overflow:auto;
 }
 
 .page-container{
-	*border:solid 1px #ddd;
-	box-shadow: 0px 0px 5px #777;
+	box-shadow: 0px 2px 5px #555;
 }
 .page-header{
 	border:none;
 	background-color:#eee;
 	margin:0px;
-	padding:10px;
-	padding-top:15px;
-	padding-bottom:10px;
+	*padding:10px;
+	*padding-top:15px;
+	*padding-bottom:10px;
+	padding:0px;
 }
 .page-content{
 	border:none;
@@ -138,7 +142,7 @@ button.btn-green:hover{
 
 
 .formContent{
-	margin-top:20px;
+	*margin-top:20px;
 	margin-bottom:10px;
 }
 .formContent .row > div > div{
@@ -148,6 +152,7 @@ button.btn-green:hover{
 	width:100%;
 }
 .subtitle{
+	font-size:10pt;
 	font-weight:600;
 }
 .submissionBar{
@@ -160,12 +165,49 @@ button.btn-green:hover{
 
 img.assetThumbnailImg{
 	max-width:150px;
-	max-height:100px;
-	border:solid 1px #ccc;
+	max-height:150px;
+	*border:solid 1px #ccc;
+	margin-right:5px;
 }
 
 .container-floatRight{
 	clear:both;
 	float:right;
 	margin-top:-7px;
+}
+
+.password-edit{
+	background-color: #EEE;
+	*border: solid 2px #FF3;
+	padding:10px;
+}
+.backnav{
+	display:inline-block;
+	text-align:center;
+	margin-right:-5px;
+}
+.backnav button{
+	height:36px;
+	background-color:#eee;
+	border-right:solid 1px #e5e5e5;
+}
+.backnav button:hover{
+	background-color:#ddd;
+}
+.backnav button i{
+	font-size:10pt;
+	font-weight:200;
+	color:#777;
+}
+
+
+
+.headerRightFloat{
+	clear:both; 
+	float:right; 
+	*margin-top:3px; 
+	*margin-right:3px;
+}
+.headerRightFloat button{
+	height:36px;
 }

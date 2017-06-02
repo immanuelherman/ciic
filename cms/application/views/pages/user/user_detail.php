@@ -1,39 +1,66 @@
 <div class="page-wrapper">
 	<div class="page-container">
+		
 		<div class="page-header">
+			<div class="backnav">
+				<!--<a href="user/get" target="_self"><i class="fa fa-angle-left"></i> Back to List</a>-->
+				<button name="btn-back"><i class="fa fa-chevron-left"></i></button>
+			</div>
 			<div class="div_bigtitle">User <span name="action"><?php echo($actionType);?></span></div> 
 		</div>
 	
 	
 		<div class="page-content">
-			<a href="user/get" target="_self"><i class="fa fa-angle-left"></i> Back to List</a>
-			<div class="div_alert hidden" style="margin-bottom:5px;"></div>
+			<div class="div_alert notificationBar hidden" style="margin-bottom:5px;"></div>
 			<div class="formContent">
 				<input type="hidden" name="id" value="<?php echo($id);?>" disabled />
 				<div class="row">
 					<div class="col-sm-4 col-md-3">
 						<div>
-							<div>Username (Email)*</div>
+							<div class="subtitle">Username (Email)*</div>
 							<input class="register_input" type="text" name="email" id="email" placeholder="user@mail.com"></input>
 						</div>
 						<div>
-							<div>Password*</div>
+							<div class="subtitle">Password*</div>
 							<input class="register_input" type="text" name="password" id="password" placeholder="password"></input>
 						</div>
 						<div>
-							<div>First Name*</div>
+							<div class="subtitle">First Name*</div>
 							<input class="register_input" type="text" name="firstname" id="firstname" placeholder="first name"></input>
 						</div>
 						<div>
-							<div>Last Name*</div>
+							<div class="subtitle">Last Name*</div>
 							<input class="register_input" type="text" name="lastname" id="lastname" placeholder="last name"></input>
 						</div>
+						
+					</div>
+					
+					<div class="col-sm-4 col-md-3">
 						<div>
-							<div>Role</div>
+							<div class="subtitle">Department</div>
+							<input class="register_input" type="text" name="department" id="department" placeholder="department"></input>
+						</div>
+						<div>
+							<div class="subtitle">Job Title</div>
+							<input class="register_input" type="text" name="jobtitle" id="jobtitle" placeholder="title"></input>
+						</div>
+						<div>
+							<div class="subtitle">Phone*</div>
+							<input class="register_input" type="number" name="phone" id="phone" placeholder="658881234"></input>
+						</div>
+						<div>
+							<div class="subtitle">Country</div>
+							<input class="register_input" type="text" name="country" id="country"></input>
+						</div>
+					</div>
+					
+					<div class="col-sm-4 col-md-3">
+						<div>
+							<div class="subtitle">Role</div>
 							<select class="register_input" type="text" name="rolecode" id="rolecode"></select>
 						</div>
 						<div>
-							<div>Account Status</div>
+							<div class="subtitle">Account Status</div>
 							<select class="register_input" type="text" name="activestatus" id="activestatus">
 								<option value="0">Inactive</option>
 								<option value="1">Active</option>
@@ -41,24 +68,6 @@
 						</div>
 					</div>
 					
-					<div class="col-sm-4 col-md-3">
-						<div>
-							<div>Department</div>
-							<input class="register_input" type="text" name="department" id="department" placeholder="department"></input>
-						</div>
-						<div>
-							<div>Job Title</div>
-							<input class="register_input" type="text" name="jobtitle" id="jobtitle" placeholder="title"></input>
-						</div>
-						<div>
-							<div>Phone*</div>
-							<input class="register_input" type="number" name="phone" id="phone" placeholder="658881234"></input>
-						</div>
-						<div>
-							<div>Country</div>
-							<input class="register_input" type="text" name="country" id="country"></input>
-						</div>
-					</div>
 				</div>
 				
 				

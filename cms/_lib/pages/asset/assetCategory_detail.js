@@ -6,25 +6,10 @@ this.main.init = function(){
 	var ref = getUrlParameters("ref");
 	if(ref) $("a[name=link-back]").attr("href", ref);
 	//
-	this.user = helper_API.session_get();
-	/*
-	this.list_table = new ihl0700_cTable();
-	this.list_table.table_update = function(d){
-		this.requestMainList(d);
-	}
-	this.list_table.table_update_handler = function(d){
-		console.log("table_update_handler");
-	}
-	// Init table
-	this.list_table.constructor({
-		$table				: $("table#mainList"),
-		url					: this.url,
-		requestFunction		: this.list_table.table_update.bind(this),
-		callbackFunction	: this.list_table.table_update_handler
-	});
+	$("[name=btn-back]").click(function(){window.location=prev_nav;});
 	//
-	$("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_search input[name=search]").attr("placeholder", "Name");
-	*/
+	this.user = helper_API.session_get();
+	//
 	this.requestMainList();
 }
 this.main.requestMainList = function(data){
@@ -57,15 +42,14 @@ this.main.requestMainList = function(data){
 this.main.getList_handler = function(result){
 	try{
 		result = JSON.parse(result);
-		if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
-			$("div.div_alert").addClass("hidden");
-			this.parseList(result);
-		}else{
-			$("div.div_alert").removeClass("hidden");
-			$("div.div_alert").html(result.responseText);
-		}
 	}catch(err){
-		console.log("error");
+		$("div.div_alert").removeClass("hidden");
+		$("div.div_alert").html(result.responseText);
+	}
+	if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
+		$("div.div_alert").addClass("hidden");
+		this.parseList(result);
+	}else{
 		$("div.div_alert").removeClass("hidden");
 		$("div.div_alert").html(result.responseText);
 	}
@@ -88,41 +72,58 @@ this.main.parseList = function(data){
 	}
 	
 	// Display thumbnails
-	var url_thumbnail = data.collection.thumbnail;
 	$("div.thumbnailContainer").empty();
-	var thumbnail = "<img src='"+api_url+url_thumbnail+"' class='assetThumbnailImg'/>";
-	$("div.thumbnailContainer").append(thumbnail);
+	if(data.thumbnail["/"].length>0){
+		for(var i=0; i<data.thumbnail["/"].length; i++){
+			var url = api_url+data.thumbnail.root_path+"/"+escape(data.thumbnail["/"][i]);
+			var thumbnail = "<img src='"+url+"' class=''/>";
+			$("div.thumbnailContainer").append(thumbnail);
+		}
+		$('.fotorama').fotorama();
+	}else{
+		var url = "_lib/images/no_image_small.png";
+		var thumbnail = "<img src='"+url+"' class='assetThumbnailImg'/>";
+		$("div.thumbnailContainer").append(thumbnail);
+	}
+	
+	
+	
 	
 	// Listing files
 	$("input[name='link_download']").val(data.link_download);
 	$("[name=btn-download]").click(this.downloadAll_click_handler.bind(this));
 	
-	//var offset = (Number($("table#mainList").attr("page"))-1) * Number($("table#mainList").attr("display"));
-	var list = data.files;
+	var list = this.renderFileList(data.zip["/"],"/");
 	var ctr=0;
 	for(var idx=0; idx<list.length; idx++){
-		if(list[idx].file_id && list[idx].size_KB){
-			ctr++;
-			var $item = $("tr#template-mainList-row").clone();
-			$item.attr("index", "file-"+idx);
-			$item.attr("id", list[idx].file_id);
-			list[idx].src = escape(list[idx].src);
-			$item.attr("src", list[idx].src);
-			$item.find("[colName=index]").attr("width","24");
-			$item.find("[colName=index]").html(ctr);
-			$item.find("[colName=1]").html(list[idx].origin_name);
-			$item.find("[colName=2]").html(list[idx].type);
-			$item.find("[colName=3]").html(list[idx].size_KB+" KB");
-			//
-			$item.find("button[name='btn-assetDownload']").click(this.assetDownload_click_handler.bind(this));
-			//
-			$("table#mainList tbody").append($item);
-		}
+		ctr++;
+		var $item = $("tr#template-mainList-row").clone();
+		$item.attr("index", "file-"+idx);
+		$item.attr("id", idx);
+		list[idx].src = escape(list[idx].src);
+		$item.attr("src", data.zip.root_path+"/"+escape(list[idx]));
+		$item.find("[colName=index]").attr("width","24");
+		$item.find("[colName=index]").html(ctr);
+		$item.find("[colName=1]").html(list[idx]);
+		//
+		$item.find("button[name='btn-assetDownload']").click(this.assetDownload_click_handler.bind(this));
+		//
+		$("table#mainList tbody").append($item);
 	}
 	this.list_table = new ihl0700_cTable();
 	this.list_table.constructor({$table:$("table#mainList")});
 	this.list_table.update();
 }
+
+this.main.renderFileList = function(obj, folder){
+	if(!folder) folder="";
+	var fileArr = new Array();
+	for(n in obj){
+		(typeof(obj[n])=="object" || typeof(obj[n])=="array") ? fileArr = fileArr.concat(this.renderFileList(obj[n], folder+String(n))) : fileArr.push(folder+obj[n]);
+	}
+	return fileArr;
+}
+
 this.main.edit_click_handler = function(ev){
 	var id = $("input[name='id']").val();
 	window.location = "asset/"+id+"/get";

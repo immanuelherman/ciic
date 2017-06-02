@@ -27,7 +27,21 @@ this.main.init = function(){
 	//
 	this.requestMainList();
 }
+this.main.show_status = function(show, msg, $elem){
+	$elem = ($($elem).length>0) ? $($elem) : $("div.div_alert");
+	if(show && msg){
+		$elem.removeClass("hidden");
+		$elem.html(msg);
+	}else{
+		$elem.addClass("hidden");
+		$elem.text("");
+	}
+}
+
+/**/
 this.main.requestMainList = function(data){
+	this.show_status(true, "<i class='fa fa-spinner fa-spin'></i> Retrieving list..", $(".notificationBar"));
+	//
 	var limit = ($("table#mainList").closest(".ihl0700_cTable").find(".ihl0700_cTable_display select").val());
 	if(data){
 		if(data.perPage){
@@ -56,17 +70,16 @@ this.main.requestMainList = function(data){
 this.main.getList_handler = function(result){
 	try{
 		result = JSON.parse(result);
-		if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
-			$("div.div_alert").addClass("hidden");
-			this.parseList(result);
-		}else{
-			$("div.div_alert").removeClass("hidden");
-			$("div.div_alert").html(result.responseText);
-		}
 	}catch(err){
-		console.log("error");
-		$("div.div_alert").removeClass("hidden");
-		$("div.div_alert").html(result.responseText);
+		var msg = (result.responseText) ? result.responseText : "Error. Parsing failed";
+		this.show_status(true, result.responseText, $(".notificationBar"));
+	}
+	if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
+		this.show_status(false);
+		this.parseList(result);
+	}else{
+		var msg = (result.responseText) ? result.responseText : "Error. Parsing failed";
+		this.show_status(true, result.responseText, $(".notificationBar"));
 	}
 }
 this.main.parseList = function(data){
@@ -130,7 +143,7 @@ this.main.deleteSelected_exec = function(result){
 	}else{
 		$ntf.html("<i class='fa fa-check'></i> Delete success");
 		clearTimeout(this.refreshTableTimeout);
-		this.refreshTableTimeout = setTimeout(this.deleteSelected_refresh.bind(this), 2000);
+		this.refreshTableTimeout = setTimeout(this.deleteSelected_refresh.bind(this), 1200);
 	}
 }
 this.main.deleteSelected_refresh = function(){

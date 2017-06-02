@@ -5,13 +5,12 @@
 			<div class="div_bigtitle">User List</div>
 		</div>
 		<div class="page-content">
-			<div class="div_alert hidden" style="margin-bottom:5px;"></div>
+			<div class="div_alert notificationBar deleteResult hidden" style="margin-bottom:5px;"></div>
 			<div class="page-content-main">
 				<div class="page-content-topBar">
 					<button name="btn-add" class="btn-green"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
 					<!--<button name="btn-import" disabled><i class="fa fa-upload" aria-hidden="true"></i> Import(CSV)</button>-->
 					<button name="btn-deleteSelected" class="" disabled><i class="fa fa-times" aria-hidden="true"></i> Delete Selected</button>
-					<div class="deleteResult div_alert hidden"></div>
 				</div>
 				<table id="mainList" class="table-standard">
 					<thead>

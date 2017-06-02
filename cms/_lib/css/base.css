@@ -30,8 +30,8 @@ button:disabled:hover{
 
 input, textarea, select{
 	border:solid 1px #ccc;
-	padding:5px;
-	font-size:11pt;
+	padding:4px 5px;
+	font-size:10pt;
 }
 input:disabled, textarea:disabled, select:disabled{
 	background-color:#eee;

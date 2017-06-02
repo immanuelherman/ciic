@@ -4,9 +4,19 @@ this.main = new Object();
 //
 this.main.init = function(){
 	$("[name=btn-create]").click(this.createAnother_click_handler.bind(this));
+	$("[name=btn-back]").click(function(){window.location="user/get";});
 	this.getRole();
 }
-
+this.main.show_status = function(show, msg, $elem){
+	$elem = ($($elem).length>0) ? $($elem) : $("div.div_alert");
+	if(show && msg){
+		$elem.removeClass("hidden");
+		$elem.html(msg);
+	}else{
+		$elem.addClass("hidden");
+		$elem.text("");
+	}
+}
 
 /**/
 this.main.reset_click_handler = function(ev){
@@ -17,8 +27,9 @@ this.main.save_click_handler = function(ev){
 }
 
 
-
+/**/
 this.main.getRole = function(){
+	this.show_status(true, "<i class='fa fa-spinner fa-spin'></i> Retrieving Roles..", $(".notificationBar"));
 	helper_API.sendXHR({
 		action:"role get",
 		path:"/roles",
@@ -31,14 +42,22 @@ this.main.getRole = function(){
 this.main.getRole_handler = function(result){
 	try{
 		result = JSON.parse(result);
+	}catch(err){
+		var msg = (result.responseText) ? result.responseText : "Error. Parsing failed";
+		this.show_status(true, result.responseText, $(".notificationBar"));
+	}
+	// Parse roles
+	if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
+		this.show_status(false);
 		var data=result.data;
 		for(var i=0; i<data.length; i++){
 			$("select[name=rolecode]").append("<option value='"+data[i].role_code+"'>"+data[i].role_name+"</option>");
 		}
-	}catch(err){
-		$("div.div_alert").removeClass("hidden");
-		$("div.div_alert").html(result.responseText);
+	}else{
+		var msg = (result.responseText) ? result.responseText : "Error. Parsing failed";
+		this.show_status(true, result.responseText, $(".notificationBar"));
 	}
+	// Get profile data
 	this.getData();
 }
 
@@ -46,6 +65,7 @@ this.main.getRole_handler = function(result){
 this.main.getData = function(){
 	this.id = $("input[name=id]").val();
 	if(this.id != "" && this.id != "0"){
+		this.show_status(true, "<i class='fa fa-spinner fa-spin'></i> Retrieving Profile..", $(".notificationBar"));
 		$("input[name=email],input[name=password]").prop("disabled",1);
 		$("input[name=email],input[name=password]").attr("editable","0");
 		$("input[name=password]").attr("type","password");
@@ -70,15 +90,17 @@ this.main.getData = function(){
 this.main.getList_handler = function(result){
 	try{
 		result = JSON.parse(result);
-		if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
-			this.parseResult(result);
-		}else{
-			$("div.div_alert").removeClass("hidden");
-			$("div.div_alert").html(result.responseText);
-		}
 	}catch(err){
-		$("div.div_alert").removeClass("hidden");
-		$("div.div_alert").html(result.responseText);
+		var msg = (result.responseText) ? result.responseText : "Error. Parsing failed";
+		this.show_status(true, result.responseText, $(".notificationBar"));
+	}
+	//
+	if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
+		this.show_status(false);
+		this.parseResult(result);
+	}else{
+		var msg = (result.responseText) ? result.responseText : "Error. Parsing failed";
+		this.show_status(true, result.responseText, $(".notificationBar"));
 	}
 }
 this.main.parseResult = function(data){

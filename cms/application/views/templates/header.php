@@ -8,10 +8,12 @@
 		
 		<link rel="stylesheet" type="text/css" href="_lib/fonts/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="_lib/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="_lib/js/fotorama/fotorama.css">
 		<link rel="stylesheet" type="text/css" href="_lib/js/ihl0700/cTable/cTable.css">
 		<link rel="stylesheet" type="text/css" href="_lib/css/base.css">
 		<link rel="stylesheet" type="text/css" href="_lib/css/ciic.css">
 		<link rel="stylesheet" type="text/css" href="_lib/css/responsive.css">
+		
 		
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -30,6 +32,8 @@
 		<script type="text/javascript" src="_lib/js/ihl0700/cTable/cTable.js"></script>
 		<!-- helpers -->
 		<script type="text/javascript" src="_lib/js/helpers.js"></script>
+		<!-- helpers -->
+		<script type="text/javascript" src="_lib/js/fotorama/fotorama.js"></script>
 		<!-- Config -->
 		<script type="text/javascript">
 			var base_path = "<?php echo($config->item('html_base'));?>";

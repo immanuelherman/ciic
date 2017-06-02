@@ -55,6 +55,7 @@ if(!helper_API){
 			var email = (session) ? data.email : "guest@mail.com";
 			var prefix = "Uciic "+data.email+":";
 			var secretKey = data.secret_key;
+			//console.log(secretKey);
 			
 			var shaObj = new jsSHA("SHA-512", "TEXT");
 			shaObj.setHMACKey(data.secret_key, "TEXT");
@@ -72,18 +73,16 @@ if(!helper_API){
 	}
 	
 	helper_API.sendXHR = function(o, callback){
-		var conf = this.configXHR(o);
-		if(conf){
-			conf.type = o.type;
-			conf.url = o.url;
-			conf.method = o.method;
-			//
-			$.ajaxSetup(conf);
-			//
-			var ajaxData = new Object();
+		var ajaxData = this.configXHR(o);
+		console.log(ajaxData);
+		if(ajaxData){
 			if(o.data) ajaxData.data = o.data;
 			if(o.contentType!=null) ajaxData.contentType = Boolean(o.contentType);
 			if(o.processData!=null) ajaxData.processData = Boolean(o.processData);
+			//
+			if(o.type) ajaxData.type = o.type;
+			if(o.url) ajaxData.url = o.url;
+			if(o.method) ajaxData.method = o.method;
 			//
 			var request = $.ajax(ajaxData)
 			request.done(function(response){
@@ -91,9 +90,9 @@ if(!helper_API){
 			});
 			request.fail(function(response){
 				switch(JSON.stringify(response.status)){
-					case "422": 
+					//case "422": 
 					case "401": 
-						//location.replace("login");
+						location.replace("login");
 						if(o.error_handler) o.error_handler(response);
 						break;
 					default:
