@@ -128,7 +128,7 @@
 			<td colName="1" style="width:100%;">
 				<div class="row assetCategory-content">
 					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-tight">
-						<div class="asset-thumbnail fotorama" data-auto="false"><img src="_lib/images/no_image.png"></div>
+						<div class="asset-thumbnail fotorama" data-auto="false" data-width="100%"><img src="_lib/images/no_image.png"></div>
 					</div>
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 assetListContainer">
 						<div class="row asset-title">

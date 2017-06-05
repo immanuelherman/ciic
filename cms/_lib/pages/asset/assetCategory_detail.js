@@ -76,13 +76,13 @@ this.main.parseList = function(data){
 	if(data.thumbnail["/"].length>0){
 		for(var i=0; i<data.thumbnail["/"].length; i++){
 			var url = api_url+data.thumbnail.root_path+"/"+escape(data.thumbnail["/"][i]);
-			var thumbnail = "<img src='"+url+"' class=''/>";
+			var thumbnail = "<img src='"+url+"?width=300' class=''/>";
 			$("div.thumbnailContainer").append(thumbnail);
 		}
 		$('.fotorama').fotorama();
 	}else{
 		var url = "_lib/images/no_image_small.png";
-		var thumbnail = "<img src='"+url+"' class='assetThumbnailImg'/>";
+		var thumbnail = "<img src='"+url+"?width=300' class='assetThumbnailImg'/>";
 		$("div.thumbnailContainer").append(thumbnail);
 	}
 	

@@ -164,8 +164,7 @@ tr#template-mainList-row > td{
 
 /**/
 [colName='thumbnail'] img{
-	*width:100%;
-	max-width:40px;
-	max-height:40px;
+	width:40px;
+	max-height:60px;
 	border:solid 1px #ddd;
 }

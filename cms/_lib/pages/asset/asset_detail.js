@@ -143,12 +143,12 @@ this.main.parseThumbnail = function(data){
 		if(data.thumbnail["/"] && data.thumbnail["/"].length>0){
 			for(var i=0; i<data.thumbnail["/"].length; i++){
 				var url = api_url+data.thumbnail.root_path+"/"+escape(data.thumbnail["/"][i]);
-				var thumbnail = "<img src='"+url+"' class='assetThumbnailImg'/>";
+				var thumbnail = "<img src='"+url+"?width=120' class='assetThumbnailImg'/>";
 				$("div.assetThumbnailList .thumbnailContainer").append(thumbnail);
 			}
 		}else{
 			var url = "_lib/images/no_image_small.png";
-			var thumbnail = "<img src='"+url+"' class='assetThumbnailImg'/>";
+			var thumbnail = "<img src='"+url+"?width=120' class='assetThumbnailImg'/>";
 			$("div.assetThumbnailList .thumbnailContainer").append(thumbnail);
 		}
 	}

@@ -103,7 +103,7 @@ this.main.parseList = function(data){
 		$item.find("[colName=7]").html(list[idx].owner);
 		//
 		if(list[idx].thumbnail && list[idx].thumbnail["/"].length>0){
-			$item.find("[colName='thumbnail'] img").attr("src", api_url+list[idx].thumbnail.root_path+"/"+list[idx].thumbnail["/"][0]);
+			$item.find("[colName='thumbnail'] img").attr("src", api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][0])+"?thumb=1");
 		}
 		//
 		$item.find("[name=btn-edit]").click(this.edit_click_handler.bind(this));

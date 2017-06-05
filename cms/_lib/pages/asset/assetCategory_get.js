@@ -97,6 +97,7 @@ this.main.requestMainList = function(data){
 	});
 }
 this.main.getList_handler = function(result){
+	console.log(result);
 	try{
 		result = JSON.parse(result);
 	}catch(err){
@@ -130,7 +131,7 @@ this.main.parseList = function(data){
 		if(list[idx].thumbnail["/"] && list[idx].thumbnail["/"].length>0){
 			$item.find(".asset-thumbnail").empty();
 			for(var i=0; i<list[idx].thumbnail["/"].length; i++){
-				var url = api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][i]);
+				var url = api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][i])+"?width=150";
 				$item.find(".asset-thumbnail").append("<img src='"+url+"' />");
 			}
 		}
@@ -179,7 +180,7 @@ this.main.renderListCard = function(data){
 		//$item.find(".mainList_card-image img").attr("src", String(api_url+list[idx].collection.thumbnail));
 		
 		if(list[idx].thumbnail["/"] && list[idx].thumbnail["/"].length>0){
-			var url = api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][0]);
+			var url = api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][0])+"?thumb=1";
 			$item.find(".mainList_card-image img").attr("src", url);
 		}
 		

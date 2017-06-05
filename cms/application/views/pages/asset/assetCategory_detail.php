@@ -20,7 +20,7 @@
 				
 				<div class="row">
 					<div class="col-sm-3">
-						<div class="thumbnailContainer fotorama" data-auto="false" ></div>
+						<div class="thumbnailContainer fotorama" data-auto="false" data-width="100%"></div>
 					</div>
 					<div class="col-sm-9">
 						<div class="row">
