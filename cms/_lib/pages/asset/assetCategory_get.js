@@ -97,7 +97,6 @@ this.main.requestMainList = function(data){
 	});
 }
 this.main.getList_handler = function(result){
-	console.log(result);
 	try{
 		result = JSON.parse(result);
 	}catch(err){
@@ -168,20 +167,32 @@ this.main.renderListCard = function(data){
 	var list = data.data;
 	for(var idx=0; idx<list.length; idx++){
 		var $item = $("div#template-mainList_card-item").clone();
-		//console.log($item);
 		$item.attr("index", "card-"+idx);
 		$item.attr("id", list[idx].asset_id);
 		$item.attr("src", list[idx].link_download);
-		//$item.find("[colName=index]").html(offset+(idx+1));
 		for(n in list[idx]){
 			if(list[idx][n]=="") list[idx][n]="-"
 			$item.find("[colname="+n+"]").html(list[idx][n]);
 		}
-		//$item.find(".mainList_card-image img").attr("src", String(api_url+list[idx].collection.thumbnail));
 		
 		if(list[idx].thumbnail["/"] && list[idx].thumbnail["/"].length>0){
-			var url = api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][0])+"?thumb=1";
-			$item.find(".mainList_card-image img").attr("src", url);
+			var url = api_url+list[idx].thumbnail.root_path+"/"+escape(list[idx].thumbnail["/"][0])+"?height=110";
+			//
+			list[idx].imageLoader = new Image();
+			list[idx].image_load_handler = function(){
+				this.$item.find(".mainList_card-image img").attr("src", this.imageLoader.src);
+				this.$item.find(".mainList_card-image img").attr("width", "auto");
+			}
+			list[idx].image_error_handler = function(){
+				this.$item.find(".mainList_card-image").css("background-color", "#fff");
+				this.$item.find(".mainList_card-image img").attr("src", "_lib/images/no_image.png");
+			}
+			list[idx].$item = $item;
+			list[idx].imageLoader.addEventListener("load", list[idx].image_load_handler.bind(list[idx]));
+			list[idx].imageLoader.addEventListener("error", list[idx].image_error_handler.bind(list[idx]));
+			list[idx].imageLoader.src = url;
+			console.log(list[idx].imageLoader);
+			console.log(url);
 		}
 		
 		//

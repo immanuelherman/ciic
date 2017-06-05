@@ -98,7 +98,7 @@
 		<div class="mainList_card-item-content">
 			<div class="mainList_card-image">
 				<table>
-					<tr><td valign="middle"><img src="_lib/images/no_image.png"></img></td></tr>
+					<tr><td valign="middle"><img width="24px" src="_lib/images/giphy.gif"></img></td></tr>
 				</table>
 			</div>
 			<div class="mainList_card-item-content-text">

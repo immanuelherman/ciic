@@ -187,7 +187,7 @@ this.main.form_reset = function(ev){
 		this.parseFileList(this.initialData.zip);
 		this.parseThumbnail(this.initialData);
 	}else{
-		$("select[name]").val(0);
+		$("select[name]").val("posm");
 		$("input[name]").val("");
 	}
 	$("input, select, textarea").prop("disabled",null);
@@ -317,6 +317,7 @@ this.main.zip_pluploader_complete_handler = function(up, file){
 		$("[name=btn-save],[name=btn-reset]").addClass("hidden");
 	}else{
 		this.show_status(true, "Create asset completed. Create another asset?", $(".submissionResult"));
+		$("[name=btn-create]").removeClass("hidden");
 	}
 }
 
@@ -334,45 +335,6 @@ this.main.form_submit = function(){
 	
 	// Submit asset
 	this.form_submit_asset();
-}
-
-this.main.save_handler = function(result){
-	/*
-	try{
-		var json = JSON.parse(result);
-		$("div.submissionResult").html(json.responseText);
-		var id = $("input[name=id]").val();
-		//
-		if(String(id) == "0" || id == ""){
-			$("div.submissionResult").html("Create asset success");
-			$("[name=btn-create]").removeClass("hidden");
-		}else{
-			$("div.submissionResult").html("Update asset success");
-			//
-			$("input, select, textarea").prop("disabled",null);
-			$("[editable=0]").prop("disabled",1);
-			//
-			$("[name=btn-reset]").removeClass("hidden");
-			$("[name=btn-save]").removeClass("hidden");
-		}
-	}catch(err){
-		$("div.submissionResult").html("Error: "+result.responseText);
-		$("input, select, textarea").prop("disabled",null);
-		$("[editable=0]").prop("disabled",1);
-		$("[name=btn-reset]").removeClass("hidden");
-		$("[name=btn-save]").removeClass("hidden");
-	}
-	$("div.submissionResult").removeClass("hidden");
-	*/
-}
-
-this.main.createAnother_click_handler = function(ev){
-	this.form_reset();
-	//
-	$("div.submissionResult").addClass("hidden");
-	$("[name=btn-create]").addClass("hidden");
-	$("[name=btn-reset]").removeClass("hidden");
-	$("[name=btn-save]").removeClass("hidden");
 }
 
 this.main.uploadFile_click_handler = function(ev){
@@ -400,6 +362,15 @@ this.main.uploadFile_click_handler = function(ev){
 
 this.main.uploadFile_handler = function(result){
 	console.log(result);
+}
+
+this.main.createAnother_click_handler = function(ev){
+	this.form_reset();
+	//
+	$("div.submissionResult").addClass("hidden");
+	$("[name=btn-create]").addClass("hidden");
+	$("[name=btn-reset]").removeClass("hidden");
+	$("[name=btn-save]").removeClass("hidden");
 }
 
 

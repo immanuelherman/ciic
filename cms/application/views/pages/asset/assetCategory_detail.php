@@ -13,7 +13,7 @@
 	
 		<div class="page-content">
 			
-			<div class="div_alert hidden" style="margin-bottom:5px;"></div>
+			<div class="mainNotification div_alert hidden" style="margin-bottom:5px;"></div>
 			<div class="assetCategoryDetail">
 				<input type="hidden" name="id" value="<?php echo($id);?>" disabled />
 				<input type="hidden" name="link_download" disabled />
@@ -94,6 +94,7 @@
 						<button name="btn-download" class="btn-blue"><i class="fa fa-download"></i> Download All (zip)</button>
 					</div>
 					<iframe class="hidden" name="assetFilesIframe"></iframe>
+					<div class="fileNotification div_alert hidden"></div>
 					<table id="mainList" class="table-standard">
 						<thead>
 							<tr>

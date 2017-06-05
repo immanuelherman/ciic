@@ -30,6 +30,8 @@ this.main.requestMainList = function(data){
 	if(!data){
 		var data = new Object({limit:limit});
 	}
+	$("div.mainNotification").removeClass("hidden");
+	$("div.mainNotification").html("<i class='fa fa-spin fa-spinner'></i> Retrieving Asset Detail..");
 	helper_API.sendXHR({
 		action:"asset get",
 		path:"/assets/"+id,
@@ -43,15 +45,15 @@ this.main.getList_handler = function(result){
 	try{
 		result = JSON.parse(result);
 	}catch(err){
-		$("div.div_alert").removeClass("hidden");
-		$("div.div_alert").html(result.responseText);
+		$("div.mainNotification").removeClass("hidden");
+		$("div.mainNotification").html(result.responseText);
 	}
 	if(String(result.responseStatus).toUpperCase() == "SUCCESS"){
-		$("div.div_alert").addClass("hidden");
+		$("div.mainNotification").addClass("hidden");
 		this.parseList(result);
 	}else{
-		$("div.div_alert").removeClass("hidden");
-		$("div.div_alert").html(result.responseText);
+		$("div.mainNotification").removeClass("hidden");
+		$("div.mainNotification").html(result.responseText);
 	}
 }
 this.main.parseList = function(data){
@@ -76,13 +78,13 @@ this.main.parseList = function(data){
 	if(data.thumbnail["/"].length>0){
 		for(var i=0; i<data.thumbnail["/"].length; i++){
 			var url = api_url+data.thumbnail.root_path+"/"+escape(data.thumbnail["/"][i]);
-			var thumbnail = "<img src='"+url+"?width=300' class=''/>";
+			var thumbnail = "<img src='"+url+"?height=200' class=''/>";
 			$("div.thumbnailContainer").append(thumbnail);
 		}
 		$('.fotorama').fotorama();
 	}else{
 		var url = "_lib/images/no_image_small.png";
-		var thumbnail = "<img src='"+url+"?width=300' class='assetThumbnailImg'/>";
+		var thumbnail = "<img src='"+url+"?height=200' class='assetThumbnailImg'/>";
 		$("div.thumbnailContainer").append(thumbnail);
 	}
 	
@@ -92,27 +94,34 @@ this.main.parseList = function(data){
 	// Listing files
 	$("input[name='link_download']").val(data.link_download);
 	$("[name=btn-download]").click(this.downloadAll_click_handler.bind(this));
-	
-	var list = this.renderFileList(data.zip["/"],"/");
-	var ctr=0;
-	for(var idx=0; idx<list.length; idx++){
-		ctr++;
-		var $item = $("tr#template-mainList-row").clone();
-		$item.attr("index", "file-"+idx);
-		$item.attr("id", idx);
-		list[idx].src = escape(list[idx].src);
-		$item.attr("src", data.zip.root_path+"/"+escape(list[idx]));
-		$item.find("[colName=index]").attr("width","24");
-		$item.find("[colName=index]").html(ctr);
-		$item.find("[colName=1]").html(list[idx]);
+	if(data.zip["/"]){
+		var list = this.renderFileList(data.zip["/"],"/");
+		var ctr=0;
+		for(var idx=0; idx<list.length; idx++){
+			ctr++;
+			var $item = $("tr#template-mainList-row").clone();
+			$item.attr("index", "file-"+idx);
+			$item.attr("id", idx);
+			list[idx].src = escape(list[idx].src);
+			$item.attr("src", data.zip.root_path+"/"+escape(list[idx]));
+			$item.find("[colName=index]").attr("width","24");
+			$item.find("[colName=index]").html(ctr);
+			$item.find("[colName=1]").html(list[idx]);
+			//
+			$item.find("button[name='btn-assetDownload']").click(this.assetDownload_click_handler.bind(this));
+			//
+			$("table#mainList tbody").append($item);
+		}
+		this.list_table = new ihl0700_cTable();
+		this.list_table.constructor({$table:$("table#mainList")});
+		this.list_table.update();
+	}else{
 		//
-		$item.find("button[name='btn-assetDownload']").click(this.assetDownload_click_handler.bind(this));
-		//
-		$("table#mainList tbody").append($item);
+		$(".fileNotification").removeClass("hidden");
+		$(".fileNotification").html("<span>Unable to render file list: File count exceed 3000 files<br/>Note: You can still download the zip although it will take a while to prepare the zip file.</span>");
+		$("table#mainList").addClass("hidden");
+		console.log(data.zip.error);
 	}
-	this.list_table = new ihl0700_cTable();
-	this.list_table.constructor({$table:$("table#mainList")});
-	this.list_table.update();
 }
 
 this.main.renderFileList = function(obj, folder){

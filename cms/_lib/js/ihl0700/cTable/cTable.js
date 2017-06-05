@@ -52,7 +52,7 @@ ihl0700_cTable = function(){
 		// Init initial params
 		var total = (opt && Number(opt.total)) ? opt.total : this.$table.find("tbody tr").length;
 		var page = (opt && Number(opt.page)) ? opt.page : 1;
-		var display = (opt && Number(opt.display)) ? opt.display : 10;
+		var display = (opt && Number(opt.display)) ? opt.display : 20;
 		var search = (opt && opt.search) ? opt.search : "";
 		var sorts = (opt && opt.sorts) ? opt.sorts : "";
 		//
@@ -84,7 +84,7 @@ ihl0700_cTable = function(){
 	this.setupWidget_display = function(){
 		this.$tc = this.$container.find("div.ihl0700_cTable_top");
 		//
-		this.$tc.prepend("<div class='ihl0700_cTable_display'><span>Display</span> <select><option>10</option><option>20</option><option>50</option></select></div>");
+		this.$tc.prepend("<div class='ihl0700_cTable_display'><span>Display</span> <select><option>20</option><option>50</option><option>100</option></select></div>");
 		this.$widget_display = this.$tc.find("div.ihl0700_cTable_display");
 		this.$widget_display.unbind();
 		this.$widget_display.change(display_change_handler.bind(this));
